@@ -16,10 +16,10 @@ ActiveRecord::Schema.define(:version => 20121227205549) do
   create_table "boxes", :force => true do |t|
     t.string   "name"
     t.integer  "team_id"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
-    t.integer  "user_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.integer  "master_meat_id"
+    t.integer  "user_id"
   end
 
   create_table "data_points", :force => true do |t|
