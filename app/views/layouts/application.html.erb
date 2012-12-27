@@ -44,13 +44,21 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">CharcutioWeb</a>
+          <a class="brand" href="#">Charcut.io</a>
           <div class="container-fluid nav-collapse">
             <ul class="nav">
               <li><%= link_to "Link1", "/path1"  %></li>
               <li><%= link_to "Link2", "/path2"  %></li>
               <li><%= link_to "Link3", "/path3"  %></li>
             </ul>
+            <% unless user_signed_in? %>
+              <form class="navbar-form pull-right form-inline" action="/users/sign_in">
+                <input type="text" class="input-small" placeholder="Email">
+                <input type="password" class="input-small" placeholder="Password">
+                <button type="submit" class="btn">Sign in</button>
+                <%= link_to "Sign up", new_user_registration_path %>
+              </form>
+            <% end %>
           </div><!--/.nav-collapse -->
         </div>
       </div>
