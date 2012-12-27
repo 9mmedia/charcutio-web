@@ -44,5 +44,10 @@ module CharcutioWeb
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # This keeps mongoid from being the default model generator
+    config.generators do |g|
+      g.orm :active_record
+    end
   end
 end
