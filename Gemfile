@@ -25,6 +25,9 @@ gem 'twitter-bootstrap-rails'
 
 gem 'devise'
 
+group :test, :development do
+  gem "rspec-rails", "~> 2.0"
+end
 
 # Use unicorn as the web server
 # gem 'unicorn'
