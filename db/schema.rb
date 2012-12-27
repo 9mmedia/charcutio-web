@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20121227204856) do
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
     t.integer  "user_id"
+    t.integer  "master_meat_id"
   end
 
   create_table "data_points", :force => true do |t|
