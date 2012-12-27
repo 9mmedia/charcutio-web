@@ -1,0 +1,13 @@
+<% if user_signed_in? %>
+  <div class="span3">
+    <ul class="nav nav-list well">
+      <li class="nav-header">Your Boxes</li>
+      <% current_user.boxes.each do |box| %>
+        <li><%= link_to box.name, box_path(box) %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="span9">
+    Your API Key: <strong><%= current_user.api_key %></strong>
+  </div>
+<% end %>

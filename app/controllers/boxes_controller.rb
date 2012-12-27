@@ -1,4 +1,8 @@
 class BoxesController < ApplicationController
+  def show
+    @box = Box.find(params[:id])
+  end
+
   def create
     @user = User.where(api_key: params[:api_key]).first
 
