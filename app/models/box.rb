@@ -15,11 +15,12 @@ class Box < ActiveRecord::Base
   end
 
   def check_dead_mans_switch
-    pull_dead_mans_switch if data_points.order('created_at desc').first.created_at >= 2.hours.ago
+    @last_update_time = data_points.order('created_at desc').first.created_at
+    pull_dead_mans_switch if @last_update_time >= 2.hours.ago
   end
 
   def pull_dead_mans_switch
-    # update the team? or just the user? twilio or email?
+    UserMailer.meat_down_email(self, team, @last_update_time).deliver
   end
 
   def name_hashtag
