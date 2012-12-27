@@ -25,6 +25,7 @@ gem 'jquery-rails'
 gem 'twitter-bootstrap-rails'
 
 gem 'devise'
+gem 'oauth'
 
 group :test, :development do
   gem "rspec-rails", "~> 2.0"
