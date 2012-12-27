@@ -11,13 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121227204856) do
+ActiveRecord::Schema.define(:version => 20121227205549) do
 
   create_table "boxes", :force => true do |t|
     t.string   "name"
     t.integer  "team_id"
-    t.string   "twitter_oauth_token"
-    t.string   "twitter_oauth_secret"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
     t.integer  "user_id"
