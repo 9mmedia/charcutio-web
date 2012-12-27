@@ -6,22 +6,12 @@ class Box < ActiveRecord::Base
   belongs_to :master_meat,
     class_name: Meat
 
-  def tweet(message, image_url)
-    Timeout::timeout(5) do
-      @response = TWITTER_CLIENT.post 'https://api.twitter.com/1.1/statuses/update.json',
-                                      {'status' => "#{message} #meat#{name_hashtag}"},
-                                      {'Accept' => 'application/xml'}
-    end rescue return nil
-    return tweet_successful?
+  def name_hashtag
+    " ##{name}" if name.present?
   end
 
-  private
-
-    def name_hashtag
-      " ##{name}" if name.present?
-    end
-
-    def tweet_successful?
-      @response ? @response.code.to_i == 200 : nil
-    end
+  def tweet(message, image_file=nil)
+    TWITTER_CLIENT.tweet "#{message} #meat#{name_hashtag}", image_file
+  end
 end
+
