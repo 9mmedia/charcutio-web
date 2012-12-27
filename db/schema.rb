@@ -11,7 +11,54 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121227162257) do
+ActiveRecord::Schema.define(:version => 20121227184646) do
+
+  create_table "boxes", :force => true do |t|
+    t.string   "name"
+    t.integer  "team_id"
+    t.string   "twitter_oauth_token"
+    t.string   "twitter_oauth_secret"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  create_table "meats", :force => true do |t|
+    t.string   "name"
+    t.integer  "recipe_id"
+    t.integer  "user_id"
+    t.integer  "team_id"
+    t.integer  "box_id"
+    t.decimal  "initial_weight"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "recipes", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "team_id"
+    t.decimal  "initial_water_percentage"
+    t.boolean  "fermented"
+    t.integer  "approximate_diameter"
+    t.integer  "expected_curing_time"
+    t.integer  "expected_fermenting_time"
+    t.integer  "expected_drying_time"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  create_table "teammates", :force => true do |t|
+    t.integer  "team_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "teams", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
