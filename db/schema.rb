@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121227191902) do
+ActiveRecord::Schema.define(:version => 20121227200447) do
 
   create_table "boxes", :force => true do |t|
     t.string   "name"
@@ -36,8 +36,10 @@ ActiveRecord::Schema.define(:version => 20121227191902) do
     t.integer  "team_id"
     t.integer  "box_id"
     t.decimal  "initial_weight"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.decimal  "goal_weight"
+    t.decimal  "initial_water_weight"
   end
 
   create_table "recipe_ingredients", :force => true do |t|
