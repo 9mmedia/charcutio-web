@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121227184646) do
+ActiveRecord::Schema.define(:version => 20121227191902) do
 
   create_table "boxes", :force => true do |t|
     t.string   "name"
@@ -20,6 +20,13 @@ ActiveRecord::Schema.define(:version => 20121227184646) do
     t.string   "twitter_oauth_secret"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
+  end
+
+  create_table "ingredients", :force => true do |t|
+    t.string   "name"
+    t.decimal  "water_percentage"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "meats", :force => true do |t|
@@ -31,6 +38,16 @@ ActiveRecord::Schema.define(:version => 20121227184646) do
     t.decimal  "initial_weight"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "recipe_ingredients", :force => true do |t|
+    t.string   "name"
+    t.integer  "ingredient_id"
+    t.integer  "recipe_id"
+    t.decimal  "recipe_weight_percentage"
+    t.decimal  "water_percentage"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "recipes", :force => true do |t|
