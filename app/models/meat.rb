@@ -10,13 +10,17 @@ class Meat < ActiveRecord::Base
   before_validation :set_goal_weight,
     if: :recipe_id_changed?
 
-  def set_goal_weight
-    self.goal_weight = initial_weight - total_weight_loss_needed
+  def check_if_completed
+    send_completed_meat_alert if reached_goal_weight?
   end
 
   def current_water_percentage(current_weight)
     @current_weight = current_weight.to_f
     current_water_weight/@current_weight
+  end
+
+  def set_goal_weight
+    self.goal_weight = (initial_weight - total_weight_loss_needed).round
   end
 
   private
@@ -27,6 +31,14 @@ class Meat < ActiveRecord::Base
 
     def initial_water_weight
       initial_weight * recipe.initial_water_percentage
+    end
+
+    def reached_goal_weight?
+      @current_weight.round <= goal_weight
+    end
+
+    def send_completed_meat_alert
+      UserMailer.completed_meat_email(self, team).deliver
     end
 
     def total_weight_loss_needed

@@ -14,9 +14,17 @@ class Box < ActiveRecord::Base
     active.each { |box| box.check_dead_mans_switch }
   end
 
+  def self.check_if_meats_completed
+    active.each { |box| box.check_meat_statuses }
+  end
+
   def check_dead_mans_switch
     @last_update_time = data_points.order('created_at desc').first.created_at
     pull_dead_mans_switch if @last_update_time >= 2.hours.ago
+  end
+
+  def check_meat_statuses
+    meats.each { |meat| meat.check_if_completed }
   end
 
   def pull_dead_mans_switch

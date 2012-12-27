@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Your <%= link_to "Charcut.io" , root_url %> meat <%= @meat.name %> is ready to eat!</h1>
+    <p>Your meat has lost at least 30% of its water content by weight, so we figure it's ready for you to pick up.</p>
+    <p>Your box is located at: <%= @meat.box.address %></p>
+    <p>C'mon over and eat your meat!</p>
+  </body>
+</html>
