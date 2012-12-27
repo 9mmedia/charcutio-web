@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Your <%= link_to "Charcut.io" , root_url %> meat box <%= @box.name %> is in trouble!</h1>
+    <p>
+      We haven't received any data from your box since <%= @last_update_time %>. Under normal conditions, we receive data from each box nearly every second. Something has gone horribly wrong on-site, and you need to look into it stat!
+    </p>
+    <p>Your box is located at: <%= @box.address %></p>
+    <p>Hurry up and go check on your meat!</p>
+  </body>
+</html>
