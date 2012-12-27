@@ -3,9 +3,15 @@ charcutio-web
 
 Meat on the web
 
-Installation
-------------
+Data API
+--------
 
-Install mongodb
+Simple implementation to get started with data pushing.
 
-    brew install mongodb
+Create a new box, returns box id.
+
+    POST /boxes {"api_key": "API_KEY", "name": "Box Name"}
+    
+Report data point
+
+    POST /boxes/:id/report {"api_key": "API_KEY", "type": "temp", "value": 55.6} 
