@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121227205549) do
+ActiveRecord::Schema.define(:version => 20121227220303) do
 
   create_table "boxes", :force => true do |t|
     t.string   "name"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20121227205549) do
     t.datetime "updated_at",     :null => false
     t.integer  "master_meat_id"
     t.integer  "user_id"
+    t.boolean  "active"
   end
 
   create_table "data_points", :force => true do |t|
