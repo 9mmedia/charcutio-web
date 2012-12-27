@@ -14,4 +14,10 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
+
+  before_create :generate_api_key
+
+  def generate_api_key
+    self.api_key = Digest::MD5.hexdigest("#{email}#{created_at.to_s}")
+  end
 end

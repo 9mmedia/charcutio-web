@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121227200447) do
+ActiveRecord::Schema.define(:version => 20121227204856) do
 
   create_table "boxes", :force => true do |t|
     t.string   "name"
@@ -20,6 +20,15 @@ ActiveRecord::Schema.define(:version => 20121227200447) do
     t.string   "twitter_oauth_secret"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
+    t.integer  "user_id"
+  end
+
+  create_table "data_points", :force => true do |t|
+    t.string   "data_type"
+    t.float    "value"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "box_id"
   end
 
   create_table "ingredients", :force => true do |t|
@@ -92,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20121227200447) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.string   "api_key"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
