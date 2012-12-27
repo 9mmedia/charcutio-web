@@ -28,6 +28,8 @@ gem 'devise'
 
 group :test, :development do
   gem "rspec-rails", "~> 2.0"
+  gem 'shoulda-matchers', '1.2.0'
+  gem 'mocha', '0.10.5'
 end
 
 # Use unicorn as the web server

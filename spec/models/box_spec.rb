@@ -1,9 +1,8 @@
 require 'spec_helper'
 
-describe User do
+describe Box do
   describe 'associations' do
-    it { should have_many(:boxes) }
     it { should have_many(:meats) }
-    it { should have_many(:teams) }
+    it { should belong_to(:team) }
   end
 end
