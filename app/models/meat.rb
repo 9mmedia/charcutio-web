@@ -11,7 +11,7 @@ class Meat < ActiveRecord::Base
     if: :recipe_id_changed?
 
   def check_if_completed
-    send_completed_meat_alert if reached_goal_weight?
+    send_completed_meat_alert if reached_goal_weight? || reached_end_date?
   end
 
   def current_water_percentage(current_weight)
@@ -37,8 +37,12 @@ class Meat < ActiveRecord::Base
       initial_weight * recipe.initial_water_percentage
     end
 
+    def reached_end_date?
+      end_date <= Time.current
+    end
+
     def reached_goal_weight?
-      @current_weight.round <= goal_weight
+     @current_weight && @current_weight.round <= goal_weight
     end
 
     def send_completed_meat_alert
