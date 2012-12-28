@@ -1,0 +1,14 @@
+<h1><%= @meat.name %></h1>
+
+Current box: <%= @meat.box.name, box_url(@meat.box) %>
+Current recipe: <%= link_to @meat.recipe.name, recipe_url(@meat.recipe) %>
+
+
+<%= form_for @meat do |f| %>
+  Name: <%= f.text_field :name, value: @meat.name %><br />
+  Recipe: <%= f.collection_select :recipe_id, Recipe.all, :id, :name, prompt: true %>
+  Box: <%= f.collection_select :box_id, Box.all, :id, :name, prompt: true %>
+  <br />
+  <br />
+  <%= f.submit 'Save' %>
+<% end %>
