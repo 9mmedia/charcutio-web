@@ -2,7 +2,7 @@
 
 <h2>Ingredients</h2>
 <ul>
-  <% @recipe.recipe_ingredients.each do |ingredient| %>
+  <% @recipe.ingredients.each do |ingredient| %>
     <li><%= "#{ingredient.recipe_weight_percentage}% #{ingredient.name}"%></li>
   <% end %>
 </ul>
@@ -11,6 +11,9 @@
 <%= @recipe.directions %>
 
 <h2>Edit:</h2>
+
+<%= render 'water_contents' %>
+
 <%= form_for @recipe do |f| %>
   Name: <%= f.text_field :name, value: @recipe.name %><br />
   <br />

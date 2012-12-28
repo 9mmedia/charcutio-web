@@ -5,10 +5,4 @@ class Ingredient < ActiveRecord::Base
     presence: true
   validates :water_percentage,
     presence: true
-
-  after_save :update_recipe_water_percentage
-
-  def update_recipe_water_percentage
-    recipe.update_water_percentage
-  end
 end

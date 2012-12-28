@@ -1,7 +1,7 @@
 class RecipesController < ApplicationController
 
   def create
-    if @recipe = Recipe.create_with_ingredients(params[:recipe])
+    if @recipe = Recipe.create!(params[:recipe])
       redirect_to recipe_url @recipe
     else
       redirect_to root_url
