@@ -27,6 +27,14 @@ class Box < ActiveRecord::Base
     meats.each { |meat| meat.check_if_completed if meat.start_date }
   end
 
+  def current_weight
+    data_points.weight.order('created_at desc').first.value
+  end
+
+  def get_set_points
+    (master_meat || meats.first).get_set_points
+  end
+
   def pull_dead_mans_switch
     UserMailer.meat_down_email(self, team, @last_update_time).deliver
   end

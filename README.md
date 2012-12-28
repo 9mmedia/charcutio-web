@@ -11,7 +11,11 @@ Simple implementation to get started with data pushing.
 Create a new box, returns box id.
 
     POST /boxes {"api_key": "API_KEY", "name": "Box Name"}
-    
+
 Report data point
 
-    POST /boxes/:id/report {"api_key": "API_KEY", "type": "temp", "value": 55.6} 
+    POST /boxes/:id/report {"api_key": "API_KEY", "type": "temp", "value": 55.6}
+
+Get temperature/humidity set points
+
+    GET /boxes/:id/set_points {"api_key": "API_KEY"}

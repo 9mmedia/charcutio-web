@@ -7,8 +7,7 @@ class Meat < ActiveRecord::Base
   validates :goal_weight,
     presence: true
 
-  before_validation :set_goal_weight,
-    if: :recipe_id_changed?
+  before_validation :set_goal_weight
 
   def cancel
     !start
@@ -28,9 +27,26 @@ class Meat < ActiveRecord::Base
     end
   end
 
-  def current_water_percentage(current_weight)
-    @current_weight = current_weight.to_f
-    current_water_weight/@current_weight
+  def current_humidity_needed
+    current_water_percentage - 5 if current_weight
+  end
+
+  def current_water_percentage
+    current_water_weight/current_weight if current_weight
+  end
+
+  def current_weight
+    @current_weight ||= box.current_weight if box
+  end
+
+  def get_set_points
+    if in_fermenting_period?
+      {temperature: fermentation_temperature, humidity: fermentation_humidity}
+    elsif current_weight.present?
+      {temperature: default_drying_temperature, humidity: current_humidity_needed}
+    else
+      {temperature: default_drying_temperature, humidity: default_drying_humidity}
+    end
   end
 
   def set_goal_weight
@@ -48,7 +64,7 @@ class Meat < ActiveRecord::Base
   private
 
     def curing_period_over?
-      Time.current >= (fermenting_start_date || drying_start_date)
+      Time.current >= (start_date + expected_curing_time.days)
     end
 
     def current_water_weight
@@ -56,7 +72,11 @@ class Meat < ActiveRecord::Base
     end
 
     def fermenting_period_over?
-      fermenting_start_date && Time.current >= fermenting_start_date
+      fermented && Time.current >= fermenting_start_date
+    end
+
+    def in_fermenting_period?
+      fermented && curing_period_over? && !fermenting_period_over?
     end
 
     def initial_water_weight
@@ -68,7 +88,7 @@ class Meat < ActiveRecord::Base
     end
 
     def reached_goal_weight?
-     @current_weight && @current_weight.round <= goal_weight
+     current_weight && current_weight.round <= goal_weight
     end
 
     def remove_timeline
@@ -92,6 +112,6 @@ class Meat < ActiveRecord::Base
     end
 
     def weight_change
-      initial_weight - @current_weight
+      initial_weight - current_weight
     end
 end
