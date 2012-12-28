@@ -9,12 +9,6 @@ class BoxesController < ApplicationController
     render :json => { box_id: @box.id }
   end
 
-  def data
-    data_points = @box.data_points.where(data_type: params[:type])
-    data = data_points.map { |datum| {time: datum.created_at.to_i, value: datum.value} }
-    render :json => { type: params[:type], data: data }
-  end
-
   def photo
     @box.tweet params[:image_file]
     head :ok
@@ -22,7 +16,7 @@ class BoxesController < ApplicationController
 
   def report
     data_point = DataPoint.new(box: @box, data_type: params[:type], value: params[:value])
-    @box.data_points << data_point
+    @box.update_data_points data_point
     render :json => { result: "success" }
   end
 
@@ -42,7 +36,6 @@ class BoxesController < ApplicationController
   end
 
   def data
-    @box = Box.find params[:id]
     span = params[:span] || :day
     data_points = @box.data_for(params[:type], span.to_sym)
     data = data_points.map { |datum| {time: datum.created_at.to_i, value: datum.value} }

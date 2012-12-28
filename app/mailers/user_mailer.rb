@@ -21,4 +21,13 @@ class UserMailer < ActionMailer::Base
     @last_update_time = last_update_time
     mail(to: team.users.map(&:email), subject: "DANGER - MEAT DOWN!")
   end
+
+  def sensor_alert_email(box, team, data_type, average_value, desired_value, difference)
+    @box = box
+    @data_type = data_type
+    @average_value = average_value
+    @desired_value = desired_value
+    @difference = difference
+    mail(to: team.users.map(&:email), subject: "DANGER - Box #{@data_type} is off by #{@difference}!")
+  end
 end

@@ -16,6 +16,10 @@ class Box < ActiveRecord::Base
     active.each { |box| box.check_dead_mans_switch }
   end
 
+  def self.check_if_data_acceptable
+    active.each { |box| box.check_recent_sensor_data }
+  end
+
   def self.check_if_meats_completed
     active.each { |box| box.check_meat_statuses }
   end
@@ -27,6 +31,13 @@ class Box < ActiveRecord::Base
 
   def check_meat_statuses
     meats.each { |meat| meat.check_if_completed if meat.start_date }
+  end
+
+  def check_recent_sensor_data
+    return nil if data_points.empty?
+    desired_values = get_set_points
+    check_sensor_data_subset :humidity, desired_value[:humidity]
+    check_sensor_data_subset :temperature, desired_value[:temperature]
   end
 
   def current_weight
@@ -66,5 +77,16 @@ class Box < ActiveRecord::Base
     end
     data = data.where(created_at: range)
   end
+
+  private
+
+    def check_sensor_data_subset(data_type, desired_value)
+      values = data_points.send(data_type).where('created_at > ?', 1.hour.ago).map(&:value)
+      average_value = values.inject(:+).to_f/values.size
+      difference = (average_value - desired_value).abs
+      if difference > 20
+        UserMailer.sensor_alert_email(self, team, data_type, average_value, desired_value, difference).deliver
+      end
+    end
 end
 

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Your <%= link_to "Charcut.io" , root_url %> meat box <%= @box.name %> is in trouble!</h1>
+    <p>
+      According to our sensors, the <%= @data_type %> in your box has averaged <%= @average_value %><%= "%" if data_type == :humidity %> over the past hour, when it should have been closer to <%= desired_value %>. That's a problem! Looks like something has gone wrong on-site, and you need to look into it stat!
+    </p>
+    <p>Your box is located at: <%= @box.address %></p>
+    <p>Hurry up and go check on your meat!</p>
+  </body>
+</html>
