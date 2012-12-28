@@ -40,6 +40,14 @@ class BoxesController < ApplicationController
     end
   end
 
+  def data
+    @box = Box.find params[:id]
+    span = params[:span] || :day
+    data_points = @box.data_for(params[:type], span.to_sym)
+    data = data_points.map { |datum| {time: datum.created_at.to_i, value: datum.value} }
+    render :json => { type: params[:type], data: data }
+  end
+
   private
 
     def authorize_api

@@ -1,17 +1,30 @@
-<div class="row-fluid">
+<div id="graph" class="row-fluid" data-box-id="<%= @box.id %>" data-graph-type="temp" data-graph-span="day">
   <div class="span12">
     <ul class="nav nav-tabs">
-      <li id="temp-tab" class="active">
-        <a href="#temp" data-toggle="tab">Temp</a>
+      <li class="graph-type active" id="temp-tab" >
+        <a href="#temp" data-toggle="tab" data-type="temp">Temp</a>
       </li>
-      <li id="humidity-tab">
-        <a href="#humidity" data-toggle="tab">Humidity</a>
+      <li class="graph-type" id="humidity-tab">
+        <a href="#humidity" data-toggle="tab" data-type="humidity">Humidity</a>
       </li>
-      <li id="weight-tab">
-        <a href="#weight" data-toggle="tab">Weight</a>
+      <li class="graph-type" id="weight-tab">
+        <a href="#weight" data-toggle="tab" data-type="weight">Weight</a>
       </li>
     </ul>
-    <div id="graph">
+    <div class="btn-group">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        Time Span
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="time" id="day"><a tabindex="-1" href="#" data-span="day">Past Day</a></li>
+        <li class="time" id="week"><a tabindex="-1" href="#" data-span="week">Past Week</a></li>
+        <li class="time" id="month"><a tabindex="-1" href="#" data-span="month">Past Month</a></li>
+        <li class="time" id="three-months"><a tabindex="-1" href="#" data-span="three_months">Three Months</a></li>
+        <li class="time" id="six-months"><a tabindex="-1" href="#" data-span="six_months">Six Months</a></li>
+      </ul>
+    </div>
+    <div id="rendered-graph">
     </div>
   </div>
 </div>
