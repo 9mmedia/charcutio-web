@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121228025501) do
+ActiveRecord::Schema.define(:version => 20121228173336) do
 
   create_table "boxes", :force => true do |t|
     t.string   "name"
@@ -76,9 +76,13 @@ ActiveRecord::Schema.define(:version => 20121228025501) do
     t.integer  "expected_curing_time"
     t.integer  "expected_fermenting_time"
     t.integer  "expected_drying_time"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
     t.text     "directions"
+    t.integer  "fermentation_temperature"
+    t.decimal  "fermentation_humidity"
+    t.integer  "default_drying_temperature"
+    t.decimal  "default_drying_humidity"
   end
 
   create_table "teammates", :force => true do |t|
