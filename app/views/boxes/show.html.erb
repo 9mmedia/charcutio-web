@@ -10,3 +10,10 @@
   Active: <%= f.check_box :active, value: @box.active %><br /><br />
   <%= f.submit 'Save' %>
 <% end %>
+
+<h1>Meats in this box:</h1>
+<ul>
+  <% @box.meats.each do |meat| %>
+    <li><%= link_to (meat.name || 'Unnamed'), meat_url(meat)%></li>
+  <% end %>
+</ul>
