@@ -6,6 +6,9 @@ CharcutioWeb::Application.routes.draw do
       post :report
     end
   end
+  resources :teams
+  resources :meats
+  resources :recipes
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
