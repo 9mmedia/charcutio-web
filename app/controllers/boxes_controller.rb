@@ -1,10 +1,12 @@
 class BoxesController < ApplicationController
+  skip_before_filter :verify_authenticity_token, only: [:create, :report]
+
   def show
     @box = Box.find(params[:id])
   end
 
   def create
-    @user = User.where(api_key: params[:api_key]).first
+    @user = User.find_by_api_key params[:api_key]
 
     if @user
       @box = Box.create(name: params[:name], user: @user)
@@ -15,7 +17,7 @@ class BoxesController < ApplicationController
   end
 
   def report
-    @user = User.where(api_key: params[:api_key]).first
+    @user = User.find_by_api_key params[:api_key]
 
     if @user
       @box = Box.find(params[:id])
@@ -24,6 +26,15 @@ class BoxesController < ApplicationController
       render :json => { result: "success" }
     else
       render :json => { result: "fail", error: "Invalid api key" }
+    end
+  end
+
+  def update
+    @box = Box.find params[:id]
+    if @box.update_attributes params[:box]
+      redirect_to box_url @box
+    else
+      redirect_to root_url
     end
   end
 end

@@ -4,3 +4,9 @@
 <div id="graph">
 
 </div>
+
+<%= form_for @box do |f| %>
+  Name: <%= f.text_field :name, value: @box.name %><br />
+  Active: <%= f.check_box :active, value: @box.active %><br /><br />
+  <%= f.submit 'Save' %>
+<% end %>
