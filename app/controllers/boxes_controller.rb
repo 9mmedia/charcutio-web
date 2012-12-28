@@ -1,5 +1,5 @@
 class BoxesController < ApplicationController
-  skip_before_filter :verify_authenticity_token, only: [:create, :report]
+  skip_before_filter :verify_authenticity_token, only: [:create, :photo, :report, :set_points]
 
   before_filter :authorize_api, only: [:create, :photo, :report, :set_points]
   before_filter :find_box, except: :create
@@ -17,6 +17,7 @@ class BoxesController < ApplicationController
 
   def photo
     @box.tweet 'meat!', params[:image_file]
+    head :ok
   end
 
   def report

@@ -1,3 +1,5 @@
+require 'twitter_account'
+
 class Box < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
@@ -44,7 +46,7 @@ class Box < ActiveRecord::Base
   end
 
   def tweet(message, image_file=nil)
-    TWITTER_CLIENT.tweet "#{message} #meat#{name_hashtag}", image_file
+    TwitterAccount.instance.tweet "#{message} #meat#{name_hashtag}", image_file
   end
 
   def data_for(type, span)
