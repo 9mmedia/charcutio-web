@@ -8,6 +8,10 @@ class RecipesController < ApplicationController
     end
   end
 
+  def edit
+    @recipe = Recipe.find params[:id]
+  end
+
   def new
     @recipe = Recipe.new
   end
@@ -18,7 +22,7 @@ class RecipesController < ApplicationController
 
   def update
     @recipe = Recipe.find params[:id]
-    if @recipe && @recipe.update_with_ingredients(params[:recipe])
+    if @recipe && @recipe.update_attributes(params[:recipe])
       redirect_to recipe_url @recipe
     else
       redirect_to root_url

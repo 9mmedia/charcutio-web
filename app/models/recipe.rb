@@ -2,7 +2,8 @@ class Recipe < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
   has_many :meats
-  has_many :ingredients
+  has_many :ingredients,
+    dependent: :destroy
 
   accepts_nested_attributes_for :ingredients,
     allow_destroy: true

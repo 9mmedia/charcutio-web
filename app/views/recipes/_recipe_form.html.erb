@@ -1,0 +1,26 @@
+<%= nested_form_for recipe do |f| %>
+  Name: <%= f.text_field :name, value: recipe.name %><br />
+  Default temperature while drying: <%= f.number_field :default_drying_temperature, value: recipe.default_drying_temperature %>° Celsius<br />
+  Default percent humidity needed while drying: <%= f.number_field :default_drying_humidity, value: recipe.default_drying_humidity %>%<br />
+  Fermented: <%= f.check_box :fermented, value: false unless recipe.fermented %><br />
+  Temperature during fermentation: <%= f.number_field :fermentation_temperature, value: recipe.fermentation_temperature %>° Celsius<br />
+  Percent humidity needed during fermentation: <%= f.number_field :fermentation_humidity, value: recipe.fermentation_humidity %>%<br />
+  <h4>Ingredients:</h4>
+  (please make sure ingredient weight percentages add up to 100!)<br />
+    <%= f.fields_for :ingredients do |ingredient_form| %>
+      Name: <%= ingredient_form.text_field :name %><br />
+      Water content percentage: <%= ingredient_form.number_field :water_percentage %>%<br />
+      Percentage of total recipe weight: <%= ingredient_form.number_field :recipe_weight_percentage %>% (leave at 0 for curing salt mix, which gets scraped off before hanging)<br />
+      <%= ingredient_form.link_to_remove "Remove this ingredient" %>
+    <% end %>
+  <p><%= f.link_to_add "Add an ingredient", :ingredients %></p>
+  <h4>Timeline:</h4>
+    Days needed for curing: <%= f.number_field :expected_curing_time %><br />
+    Days needed for fermenting: <%= f.number_field :expected_fermenting_time %><br />
+    Days needed for drying: <%= f.number_field :expected_drying_time %><br />
+  <h4>Directions:</h4>
+  <%= f.text_area :directions, value: recipe.directions %>
+  <br />
+  <br />
+  <%= f.submit 'Save' %>
+<% end %>
