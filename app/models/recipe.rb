@@ -7,6 +7,9 @@ class Recipe < ActiveRecord::Base
   validates :initial_water_percentage,
     presence: true
 
+  accepts_nested_attributes_for :ingredients,
+    allow_destroy: true
+
   before_validation :set_initial_water_percentage
 
   def set_initial_water_percentage

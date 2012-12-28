@@ -23,6 +23,7 @@ end
 
 gem 'jquery-rails'
 gem 'twitter-bootstrap-rails'
+gem 'nested_form'
 
 gem 'devise'
 gem 'oauth'
