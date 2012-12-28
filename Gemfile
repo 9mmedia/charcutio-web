@@ -26,7 +26,7 @@ gem 'twitter-bootstrap-rails'
 gem 'nested_form'
 
 gem 'devise'
-gem 'oauth'
+gem 'twitter'
 
 group :test, :development do
   gem "rspec-rails", "~> 2.0"
