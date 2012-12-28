@@ -3,7 +3,7 @@ class MeatsController < ApplicationController
   before_filter :authenticate_user!, except: :show
 
   def create
-    if @meat = Meat.create!(params[:meat])
+    if @meat = current_user.meats.create!(params[:meat])
       redirect_to meat_url @meat
     else
       redirect_to root_url

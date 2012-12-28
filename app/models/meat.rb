@@ -8,6 +8,7 @@ class Meat < ActiveRecord::Base
     presence: true
 
   before_validation :set_goal_weight
+  before_save :update_team
 
   def cancel
     !start
@@ -47,10 +48,6 @@ class Meat < ActiveRecord::Base
     else
       {temperature: default_drying_temperature, humidity: default_drying_humidity}
     end
-  end
-
-  def set_goal_weight
-    self.goal_weight = (initial_weight - total_weight_loss_needed).round
   end
 
   def start
@@ -95,6 +92,10 @@ class Meat < ActiveRecord::Base
       update_attributes start_date: nil, fermenting_start_date: nil, drying_start_date: nil, end_date: nil
     end
 
+    def set_goal_weight
+      self.goal_weight = (initial_weight - total_weight_loss_needed).round
+    end
+
     def set_timeline
       self.start_date = Time.current
       if recipe.fermented
@@ -109,6 +110,10 @@ class Meat < ActiveRecord::Base
 
     def total_weight_loss_needed
       initial_water_weight/3.0
+    end
+
+    def update_team
+      self.team = box.team if box.present?
     end
 
     def weight_change

@@ -3,7 +3,7 @@ class RecipesController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show]
 
   def create
-    if @recipe = Recipe.create!(params[:recipe])
+    if @recipe = current_user.recipes.create!(params[:recipe])
       redirect_to recipe_url @recipe
     else
       redirect_to root_url
@@ -15,7 +15,8 @@ class RecipesController < ApplicationController
 
   def fork
     @recipe.name = "forked copy of #{@recipe.name}"
-    if @new_recipe = Recipe.create!(@recipe.attributes)
+    @recipe.user_id = nil
+    if @new_recipe = current_user.recipes.create!(@recipe.attributes)
       redirect_to edit_recipe_url @new_recipe
     else
       redirect_to root_url
