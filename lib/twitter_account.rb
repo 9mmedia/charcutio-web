@@ -1,7 +1,8 @@
 class TwitterAccount
+  MESSAGES = %w(#pigpigpig #MEAT! #sohungry #whencanweeat #omnomnom)
 
   def self.random_message(name_hashtag)
-    name_hashtag
+    "#{MESSAGES.sample}#{name_hashtag}"
   end
 
   def self.tweet(name_hashtag, image_file=nil)
