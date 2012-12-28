@@ -1,9 +1,11 @@
-require 'singleton'
-
 class TwitterAccount
-  include Singleton
 
-  def tweet(message, image_file=nil)
+  def self.random_message(name_hashtag)
+    name_hashtag
+  end
+
+  def self.tweet(name_hashtag, image_file=nil)
+    message = random_message(name_hashtag)
     Timeout::timeout(5) do
       if image_file
         tweet_with_image(message, image_file)
@@ -15,7 +17,7 @@ class TwitterAccount
 
   private
 
-    def client
+    def self.client
       Twitter::Client.new(
         :consumer_key => ENV['TWITTER_APP_KEY'],
         :consumer_secret => ENV['TWITTER_APP_SECRET'],
@@ -23,11 +25,11 @@ class TwitterAccount
         :oauth_token_secret => ENV['TWITTER_CLIENT_SECRET'])
     end
 
-    def tweet_with_image(message, image_file)
+    def self.tweet_with_image(message, image_file)
       client.update_with_media message, image_file
     end
 
-    def tweet_without_image(message)
+    def self.tweet_without_image(message)
       client.update message
     end
 end

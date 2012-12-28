@@ -42,11 +42,11 @@ class Box < ActiveRecord::Base
   end
 
   def name_hashtag
-    " ##{name}" if name.present?
+    name.present? ? " ##{name}" : ''
   end
 
-  def tweet(message, image_file=nil)
-    TwitterAccount.instance.tweet "#{message} #meat#{name_hashtag}", image_file
+  def tweet(image_file=nil)
+    TwitterAccount.tweet name_hashtag, image_file
   end
 
   def data_for(type, span)

@@ -16,7 +16,7 @@ class BoxesController < ApplicationController
   end
 
   def photo
-    @box.tweet 'meat!', params[:image_file]
+    @box.tweet params[:image_file]
     head :ok
   end
 
