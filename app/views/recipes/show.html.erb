@@ -42,4 +42,5 @@ Default humidity needed: <%= @recipe.default_drying_humidity %>%
   </ul>
 <% end %>
 
-TODO: Add links to: fork this recipe, create a meat using this recipe
+<%= link_to "Fork this recipe!", fork_recipe_url(@recipe) %><br />
+<%= link_to "Create a meat using this recipe!", new_meat_url(recipe_id: @recipe.id) %>

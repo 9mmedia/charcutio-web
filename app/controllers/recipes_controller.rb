@@ -1,4 +1,5 @@
 class RecipesController < ApplicationController
+  before_filter :find_recipe, only: [:edit, :fork, :show, :update]
 
   def create
     if @recipe = Recipe.create!(params[:recipe])
@@ -9,7 +10,15 @@ class RecipesController < ApplicationController
   end
 
   def edit
-    @recipe = Recipe.find params[:id]
+  end
+
+  def fork
+    @recipe.name = "forked copy of #{@recipe.name}"
+    if @new_recipe = Recipe.create!(@recipe.attributes)
+      redirect_to edit_recipe_url @new_recipe
+    else
+      redirect_to root_url
+    end
   end
 
   def index
@@ -21,15 +30,20 @@ class RecipesController < ApplicationController
   end
 
   def show
-    @recipe = Recipe.find params[:id]
   end
 
   def update
-    @recipe = Recipe.find params[:id]
-    if @recipe && @recipe.update_attributes(params[:recipe])
+    if @recipe.update_attributes(params[:recipe])
       redirect_to recipe_url @recipe
     else
       redirect_to root_url
     end
   end
+
+  private
+
+    def find_recipe
+      @recipe = Recipe.find params[:id]
+      redirect_to root_url unless @recipe
+    end
 end

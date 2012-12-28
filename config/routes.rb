@@ -10,6 +10,7 @@ CharcutioWeb::Application.routes.draw do
   resources :teams
   resources :meats
   resources :recipes
+  match 'recipes/:id/fork' => 'recipes#fork', as: :fork_recipe
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

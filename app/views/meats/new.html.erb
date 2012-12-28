@@ -2,7 +2,7 @@
 
 <%= form_for @meat do |f| %>
   Name: <%= f.text_field :name, value: @meat.name %><br />
-  Recipe: <%= f.collection_select :recipe_id, Recipe.all, :id, :name, prompt: true %>  <%= link_to "(or go create a new recipe first!)", new_recipe_path %><br />
+  Recipe: <%= f.collection_select :recipe_id, Recipe.all, :id, :name, prompt: true, selected: params[:recipe_id] %>  <%= link_to "(or go create a new recipe first!)", new_recipe_path %><br />
   Total initial weight (in grams): <%= f.number_field :initial_weight, value: @meat.initial_weight %><br />
   Box: <%= f.collection_select :box_id, Box.all, :id, :name, prompt: true, include_blank: true %><br />
   <%= "Start today: " unless @meat.start_date %><%= f.check_box :start, value: false unless @meat.start_date %><br /><br />
