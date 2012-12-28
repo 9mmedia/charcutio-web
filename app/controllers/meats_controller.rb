@@ -1,7 +1,7 @@
 class MeatsController < ApplicationController
 
   def create
-    if @meat = Meat.create(params[:meat])
+    if @meat = Meat.create!(params[:meat])
       redirect_to meat_url @meat
     else
       redirect_to root_url
