@@ -4,6 +4,7 @@ CharcutioWeb::Application.routes.draw do
   resources :boxes do
     member do
       post :report
+      match 'data/:type' => "boxes#data" # /boxes/:id/data/:type
     end
   end
   resources :teams

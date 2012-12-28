@@ -37,4 +37,11 @@ class BoxesController < ApplicationController
       redirect_to root_url
     end
   end
+
+  def data
+    @box = Box.find params[:id]
+    data_points = @box.data_points.where(data_type: params[:type])
+    data = data_points.map { |datum| {time: datum.created_at.to_i, value: datum.value} }
+    render :json => { type: params[:type], data: data }
+  end
 end

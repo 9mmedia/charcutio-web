@@ -1,9 +1,7 @@
 <% content_for :javascripts do %>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <% end %>
-<div id="graph">
-
-</div>
+<%= render :partial => 'charts' %>
 
 <%= form_for @box do |f| %>
   Name: <%= f.text_field :name, value: @box.name %><br />
