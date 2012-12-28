@@ -23,6 +23,10 @@ class Meat < ActiveRecord::Base
     self.goal_weight = (initial_weight - total_weight_loss_needed).round
   end
 
+  def start=(value)
+    set_timeline if ["1", 1, true].include?(value)
+  end
+
   private
 
     def current_water_weight
@@ -39,6 +43,18 @@ class Meat < ActiveRecord::Base
 
     def send_completed_meat_alert
       UserMailer.completed_meat_email(self, team).deliver
+    end
+
+    def set_timeline
+      self.start_date = Time.current
+      if recipe.fermented
+        self.fermenting_start_date = start_date + recipe.expected_curing_time
+        self.drying_start_date = fermenting_start_date + recipe.expected_fermenting_time
+      else
+        self.drying_start_date = start_date + recipe.expected_curing_time
+      end
+      self.end_date = drying_start_date + recipe.expected_drying_time
+      save!
     end
 
     def total_weight_loss_needed
