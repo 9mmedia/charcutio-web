@@ -9,14 +9,24 @@ types =
 
 buildDataTable = (json) ->
   table = new google.visualization.DataTable()
+  formatter = new google.visualization.DateFormat(
+    formatType: "short"
+    #pattern: "M/d/yy h:mm"
+  )
   table.addColumn('datetime', 'Time')
   table.addColumn('number', types[json["type"]])
   tuples = json.data
   rows = for tuple in tuples
     [new Date(tuple.time * 1000), tuple.value]
   table.addRows(rows)
+  #formatter.format(table,0)
   options =
     title: json.type
+    hAxis:
+      format: "M/d/yy h:mm a"
+      slantedText: true
+      textStyle:
+        fontSize: 10
 
   chart = new google.visualization.LineChart(document.getElementById('graph'))
   chart.draw(table, options)
