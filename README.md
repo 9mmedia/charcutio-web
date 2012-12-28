@@ -19,3 +19,7 @@ Report data point
 Get temperature/humidity set points
 
     GET /boxes/:id/set_points {"api_key": "API_KEY"}
+
+Tweet a photo.
+
+    POST /boxes/:id/photo {"api_key": "API_KEY", "image_file": multipart_file}

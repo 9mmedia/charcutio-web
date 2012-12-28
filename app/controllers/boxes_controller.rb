@@ -1,19 +1,25 @@
 class BoxesController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: [:create, :report]
 
-  before_filter :authorize_api, only: [:create, :report, :set_points]
-
-  def show
-    @box = Box.find(params[:id])
-  end
+  before_filter :authorize_api, only: [:create, :photo, :report, :set_points]
+  before_filter :find_box, except: :create
 
   def create
     @box = Box.create(name: params[:name], user: @user)
     render :json => { box_id: @box.id }
   end
 
+  def data
+    data_points = @box.data_points.where(data_type: params[:type])
+    data = data_points.map { |datum| {time: datum.created_at.to_i, value: datum.value} }
+    render :json => { type: params[:type], data: data }
+  end
+
+  def photo
+    @box.tweet 'meat!', params[:image_file]
+  end
+
   def report
-    @box = Box.find(params[:id])
     data_point = DataPoint.new(box: @box, data_type: params[:type], value: params[:value])
     @box.data_points << data_point
     render :json => { result: "success" }
@@ -23,8 +29,10 @@ class BoxesController < ApplicationController
     render :json => @box.get_set_points
   end
 
+  def show
+  end
+
   def update
-    @box = Box.find params[:id]
     if @box.update_attributes params[:box]
       redirect_to box_url @box
     else
@@ -32,17 +40,14 @@ class BoxesController < ApplicationController
     end
   end
 
-  def data
-    @box = Box.find params[:id]
-    data_points = @box.data_points.where(data_type: params[:type])
-    data = data_points.map { |datum| {time: datum.created_at.to_i, value: datum.value} }
-    render :json => { type: params[:type], data: data }
-  end
-
   private
 
     def authorize_api
       @user = User.find_by_api_key params[:api_key]
       render :json => { error: "Invalid api key" } unless @user
+    end
+
+    def find_box
+      @box = Box.find params[:id]
     end
 end

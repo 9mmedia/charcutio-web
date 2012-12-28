@@ -11,7 +11,6 @@ class TwitterAccount
         tweet_without_image(message)
       end
     end rescue return nil
-    return tweet_successful?
   end
 
   private
@@ -24,19 +23,15 @@ class TwitterAccount
       OAuth::Consumer.new ENV['TWITTER_APP_KEY'], ENV['TWITTER_APP_SECRET'], site: "http://api.twitter.com"
     end
 
-    def tweet_successful?
-      @response ? @response.code.to_i == 200 : nil
-    end
-
     def tweet_with_image(message, image_file)
-      @response = client.post 'https://api.twitter.com/1.1/statuses/update_with_media.json',
-                              {'status' => message, 'media' => image_file},
-                              {'Content-Type' => 'multipart/form-data'}
+      client.post 'https://api.twitter.com/1.1/statuses/update_with_media.json',
+                  {'status' => message, 'media' => image_file},
+                  {'Content-Type' => 'multipart/form-data'}
     end
 
     def tweet_without_image(message)
-      @response = client.post 'https://api.twitter.com/1.1/statuses/update.json',
-                              {'status' => message},
-                              {'Accept' => 'application/xml'}
+      client.post 'https://api.twitter.com/1.1/statuses/update.json',
+                  {'status' => message},
+                  {'Accept' => 'application/xml'}
     end
 end
