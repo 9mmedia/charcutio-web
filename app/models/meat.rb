@@ -11,7 +11,13 @@ class Meat < ActiveRecord::Base
     if: :recipe_id_changed?
 
   def check_if_completed
-    send_completed_meat_alert if reached_goal_weight? || reached_end_date?
+    if reached_goal_weight? || reached_end_date?
+      UserMailer.completed_meat_email(self, team).deliver
+    elsif fermenting_period_over?
+      UserMailer.fermenting_completed_email(self, team).deliver
+    elsif curing_period_over?
+      UserMailer.curing_completed_email(self, team).deliver
+    end
   end
 
   def current_water_percentage(current_weight)
@@ -29,8 +35,16 @@ class Meat < ActiveRecord::Base
 
   private
 
+    def curing_period_over?
+      Time.current >= (fermenting_start_date || drying_start_date)
+    end
+
     def current_water_weight
       initial_water_weight - weight_change
+    end
+
+    def fermenting_period_over?
+      fermenting_start_date && Time.current >= fermenting_start_date
     end
 
     def initial_water_weight
@@ -38,15 +52,11 @@ class Meat < ActiveRecord::Base
     end
 
     def reached_end_date?
-      end_date <= Time.current
+      Time.current >= end_date
     end
 
     def reached_goal_weight?
      @current_weight && @current_weight.round <= goal_weight
-    end
-
-    def send_completed_meat_alert
-      UserMailer.completed_meat_email(self, team).deliver
     end
 
     def set_timeline
