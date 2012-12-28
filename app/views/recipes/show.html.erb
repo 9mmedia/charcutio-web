@@ -1,0 +1,27 @@
+<h1><%= @recipe.name %></h1>
+
+<h2>Ingredients</h2>
+<ul>
+  <% @recipe.recipe_ingredients.each do |ingredient| %>
+    <li><%= "#{ingredient.recipe_weight_percentage}% #{ingredient.name}"%></li>
+  <% end %>
+</ul>
+
+<h2>Directions</h2>
+<%= @recipe.directions %>
+
+<h2>Edit:</h2>
+<%= form_for @recipe do |f| %>
+  Name: <%= f.text_field :name, value: @recipe.name %><br />
+  <br />
+  <br />
+  <%= f.submit 'Save' %>
+<% end %>
+
+
+<h2>Meats using this recipe:</h2>
+<ul>
+  <% @recipe.meats.each do |meat| %>
+    <li><%= link_to (meat.name || 'Unnamed'), meat_url(meat)%></li>
+  <% end %>
+</ul>
