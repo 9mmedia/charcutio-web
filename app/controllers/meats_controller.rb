@@ -13,7 +13,7 @@ class MeatsController < ApplicationController
   end
 
   def show
-    @meat = Meat.find(params[:id])
+    @meat = Meat.find params[:id]
   end
 
   def update
