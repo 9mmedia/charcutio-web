@@ -2,33 +2,40 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+types =
+  temp: "Temperature (F)"
+  humidity: "Humidity (%)"
+  weight: "Weight (lbs)"
+
 buildDataTable = (json) ->
   table = new google.visualization.DataTable()
   table.addColumn('datetime', 'Time')
-  table.addColumn('number', 'Temperature (F)')
+  table.addColumn('number', types[json["type"]])
   tuples = json.data
   rows = for tuple in tuples
     [new Date(tuple.time * 1000), tuple.value]
   table.addRows(rows)
   options =
     title: json.type
-    vAxis:
-      minValue: 40
 
   chart = new google.visualization.LineChart(document.getElementById('graph'))
   chart.draw(table, options)
 
-drawChart = () ->
-  $.getJSON('/boxes/1/data/temp', buildDataTable)
-  #options =
-    #title: "Test Chart"
-    #vAxis:
-      #minValue: 40
+drawChart = (type) ->
+  $.getJSON("/boxes/1/data/#{type}", buildDataTable)
 
-  #chart = new google.visualization.LineChart(document.getElementById('graph'))
-  #chart.draw(data, options)
-
+initialLoad = () ->
+  drawChart("temp")
 
 google.load("visualization", "1", {packages:["corechart"]})
-google.setOnLoadCallback(drawChart)
+google.setOnLoadCallback(initialLoad)
+
+$(->
+  $("#temp-tab a").click((e) ->
+    drawChart("temp"))
+  $("#humidity-tab a").click((e) ->
+    drawChart("humidity"))
+  $("#weight-tab a").click((e) ->
+    drawChart("weight"))
+)
 
