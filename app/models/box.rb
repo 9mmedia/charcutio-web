@@ -24,7 +24,7 @@ class Box < ActiveRecord::Base
   end
 
   def check_meat_statuses
-    meats.each { |meat| meat.check_if_completed }
+    meats.each { |meat| meat.check_if_completed if meat.start_date }
   end
 
   def pull_dead_mans_switch
