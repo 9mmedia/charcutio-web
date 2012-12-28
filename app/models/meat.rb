@@ -29,6 +29,10 @@ class Meat < ActiveRecord::Base
     self.goal_weight = (initial_weight - total_weight_loss_needed).round
   end
 
+  def start
+    start_date.present?
+  end
+
   def start=(value)
     set_timeline if ["1", 1, true].include?(value)
   end
