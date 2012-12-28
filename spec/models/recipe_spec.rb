@@ -5,6 +5,6 @@ describe Recipe do
     it { should belong_to(:team) }
     it { should belong_to(:user) }
     it { should have_many(:meats) }
-    it { should have_many(:recipe_ingredients) }
+    it { should have_many(:ingredients) }
   end
 end

@@ -1,6 +1,9 @@
 class Ingredient < ActiveRecord::Base
-  has_many :recipe_ingredients
+  belongs_to :recipe
 
+  validates :recipe_weight_percentage,
+    presence: true
   validates :water_percentage,
     presence: true
+
 end
