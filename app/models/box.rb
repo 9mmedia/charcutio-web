@@ -38,5 +38,23 @@ class Box < ActiveRecord::Base
   def tweet(message, image_file=nil)
     TWITTER_CLIENT.tweet "#{message} #meat#{name_hashtag}", image_file
   end
+
+  def data_for(type, span)
+    data = data_points.where(data_type: type).order("created_at DESC")
+    range = 1.day.ago..Time.now
+    case span
+    when :day
+      range = 1.day.ago..Time.now
+    when :week
+      range = 1.week.ago..Time.now
+    when :month
+      range = 1.month.ago..Time.now
+    when :three_months
+      range = 3.months.ago..Time.now
+    when :six_months
+      range = 6.months.ago..Time.now
+    end
+    data = data.where(created_at: range)
+  end
 end
 

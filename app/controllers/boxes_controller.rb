@@ -40,7 +40,8 @@ class BoxesController < ApplicationController
 
   def data
     @box = Box.find params[:id]
-    data_points = @box.data_points.where(data_type: params[:type])
+    span = params[:span] || :day
+    data_points = @box.data_for(params[:type], span.to_sym)
     data = data_points.map { |datum| {time: datum.created_at.to_i, value: datum.value} }
     render :json => { type: params[:type], data: data }
   end

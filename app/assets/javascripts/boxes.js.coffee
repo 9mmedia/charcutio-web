@@ -7,19 +7,14 @@ types =
   humidity: "Humidity (%)"
   weight: "Weight (lbs)"
 
-buildDataTable = (json) ->
+drawChart = (json) ->
   table = new google.visualization.DataTable()
-  formatter = new google.visualization.DateFormat(
-    formatType: "short"
-    #pattern: "M/d/yy h:mm"
-  )
   table.addColumn('datetime', 'Time')
   table.addColumn('number', types[json["type"]])
   tuples = json.data
   rows = for tuple in tuples
     [new Date(tuple.time * 1000), tuple.value]
   table.addRows(rows)
-  #formatter.format(table,0)
   options =
     title: json.type
     hAxis:
@@ -28,24 +23,32 @@ buildDataTable = (json) ->
       textStyle:
         fontSize: 10
 
-  chart = new google.visualization.LineChart(document.getElementById('graph'))
+  chart = new google.visualization.LineChart(document.getElementById('rendered-graph'))
   chart.draw(table, options)
 
-drawChart = (type) ->
-  $.getJSON("/boxes/1/data/#{type}", buildDataTable)
+loadData = () ->
+  boxId = $("#graph").data("boxId")
+  span = $("#graph").data("graphSpan")
+  type = $("#graph").data("graphType")
+  $.getJSON("/boxes/#{boxId}/data/#{type}", { span: span }, drawChart)
 
 initialLoad = () ->
-  drawChart("temp")
+  loadData()
 
 google.load("visualization", "1", {packages:["corechart"]})
 google.setOnLoadCallback(initialLoad)
 
 $(->
-  $("#temp-tab a").click((e) ->
-    drawChart("temp"))
-  $("#humidity-tab a").click((e) ->
-    drawChart("humidity"))
-  $("#weight-tab a").click((e) ->
-    drawChart("weight"))
+  $(".graph-type a").click((e) ->
+    newType = $(this).data("type")
+    $("#graph").data("graphType", newType)
+    loadData()
+  )
+
+  $(".time a").click((e) ->
+    newSpan = $(this).data("span")
+    $("#graph").data("graphSpan", newSpan)
+    loadData()
+  )
 )
 
