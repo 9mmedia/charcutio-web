@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121228180405) do
+ActiveRecord::Schema.define(:version => 20121228190509) do
 
   create_table "boxes", :force => true do |t|
     t.string   "name"
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(:version => 20121228180405) do
   create_table "ingredients", :force => true do |t|
     t.string   "name"
     t.integer  "recipe_id"
-    t.decimal  "recipe_weight_percentage"
-    t.decimal  "water_percentage"
+    t.integer  "recipe_weight_percentage"
+    t.integer  "water_percentage"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
   end
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(:version => 20121228180405) do
     t.string   "name"
     t.integer  "user_id"
     t.integer  "team_id"
-    t.decimal  "initial_water_percentage"
+    t.integer  "initial_water_percentage"
     t.boolean  "fermented"
     t.integer  "approximate_diameter"
     t.integer  "expected_curing_time"
@@ -72,9 +72,9 @@ ActiveRecord::Schema.define(:version => 20121228180405) do
     t.datetime "updated_at",                 :null => false
     t.text     "directions"
     t.integer  "fermentation_temperature"
-    t.decimal  "fermentation_humidity"
+    t.integer  "fermentation_humidity"
     t.integer  "default_drying_temperature"
-    t.decimal  "default_drying_humidity"
+    t.integer  "default_drying_humidity"
   end
 
   create_table "teammates", :force => true do |t|

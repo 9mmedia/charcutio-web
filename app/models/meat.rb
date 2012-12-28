@@ -48,7 +48,7 @@ class Meat < ActiveRecord::Base
     end
 
     def initial_water_weight
-      initial_weight * recipe.initial_water_percentage
+      initial_weight * (recipe.initial_water_percentage/100.0)
     end
 
     def reached_end_date?
