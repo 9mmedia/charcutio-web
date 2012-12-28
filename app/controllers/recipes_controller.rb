@@ -1,5 +1,6 @@
 class RecipesController < ApplicationController
   before_filter :find_recipe, only: [:edit, :fork, :show, :update]
+  before_filter :authenticate_user!, except: [:index, :show]
 
   def create
     if @recipe = Recipe.create!(params[:recipe])
