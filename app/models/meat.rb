@@ -10,6 +10,14 @@ class Meat < ActiveRecord::Base
   before_validation :set_goal_weight,
     if: :recipe_id_changed?
 
+  def cancel
+    !start
+  end
+
+  def cancel=(value)
+    remove_timeline if ["1", 1, true].include?(value)
+  end
+
   def check_if_completed
     if reached_goal_weight? || reached_end_date?
       UserMailer.completed_meat_email(self, team).deliver
@@ -61,6 +69,10 @@ class Meat < ActiveRecord::Base
 
     def reached_goal_weight?
      @current_weight && @current_weight.round <= goal_weight
+    end
+
+    def remove_timeline
+      update_attributes start_date: nil, fermenting_start_date: nil, drying_start_date: nil, end_date: nil
     end
 
     def set_timeline
