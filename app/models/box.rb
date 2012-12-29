@@ -48,6 +48,14 @@ class Box < ActiveRecord::Base
     (master_meat || meats.first).get_set_points
   end
 
+  def goal_weight
+    @goal_weight ||= initial_weight/3.0
+  end
+
+  def initial_weight
+    @initial_weight ||= meats.map(&:initial_weight).inject(:+)
+  end
+
   def pull_dead_mans_switch
     UserMailer.meat_down_email(self, team, @last_update_time).deliver
   end
