@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121228190509) do
+ActiveRecord::Schema.define(:version => 20121229005735) do
 
   create_table "boxes", :force => true do |t|
     t.string   "name"
@@ -65,11 +65,11 @@ ActiveRecord::Schema.define(:version => 20121228190509) do
     t.integer  "initial_water_percentage"
     t.boolean  "fermented"
     t.integer  "approximate_diameter"
-    t.integer  "expected_curing_time"
-    t.integer  "expected_fermenting_time"
-    t.integer  "expected_drying_time"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.integer  "expected_curing_time",       :default => 0
+    t.integer  "expected_fermenting_time",   :default => 0
+    t.integer  "expected_drying_time",       :default => 0
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.text     "directions"
     t.integer  "fermentation_temperature"
     t.integer  "fermentation_humidity"

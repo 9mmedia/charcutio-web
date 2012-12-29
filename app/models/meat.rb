@@ -98,13 +98,9 @@ class Meat < ActiveRecord::Base
 
     def set_timeline
       self.start_date = Time.current
-      if recipe.fermented
-        self.fermenting_start_date = start_date + recipe.expected_curing_time
-        self.drying_start_date = fermenting_start_date + recipe.expected_fermenting_time
-      else
-        self.drying_start_date = start_date + recipe.expected_curing_time
-      end
-      self.end_date = drying_start_date + recipe.expected_drying_time
+      self.fermenting_start_date = start_date + recipe.expected_curing_time.days
+      self.drying_start_date = fermenting_start_date + recipe.expected_fermenting_time.days
+      self.end_date = drying_start_date + recipe.expected_drying_time.days
       save!
     end
 
