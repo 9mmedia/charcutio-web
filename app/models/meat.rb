@@ -50,6 +50,14 @@ class Meat < ActiveRecord::Base
     end
   end
 
+  def name
+    if read_attribute(:name).present?
+      read_attribute :name
+    else
+      'Unnamed'
+    end
+  end
+
   def start
     start_date.present?
   end

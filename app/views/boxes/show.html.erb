@@ -19,6 +19,6 @@ Active: <%= @box.active ? "True" : "False" %><br />
 <h3>Meats in this box:</h3>
 <ul>
   <% @box.meats.each do |meat| %>
-    <li><%= link_to (meat.name || 'Unnamed'), meat_url(meat)%></li>
+    <li><%= link_to meat.name, meat_url(meat)%></li>
   <% end %>
 </ul>

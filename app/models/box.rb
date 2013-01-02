@@ -56,6 +56,14 @@ class Box < ActiveRecord::Base
     @initial_weight ||= meats.map(&:initial_weight).inject(:+)
   end
 
+  def name
+    if read_attribute(:name).present?
+      read_attribute :name
+    else
+      'Unnamed'
+    end
+  end
+
   def pull_dead_mans_switch
     UserMailer.meat_down_email(self, team, @last_update_time).deliver
   end
