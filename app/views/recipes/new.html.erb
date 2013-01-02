@@ -1,5 +1,7 @@
-<%= render 'water_contents' %>
-
-<h1>Create a new recipe!</h1>
-
-<%= render 'recipe_form', recipe: @recipe %>
+<div class='row-fluid'>
+  <div class='span6'>
+    <h1>Create a new recipe!</h1>
+    <%= render 'recipe_form', recipe: @recipe %>
+  </div>
+  <%= render 'water_contents' %>
+</div>

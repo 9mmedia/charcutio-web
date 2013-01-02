@@ -1,47 +1,50 @@
-<%= render 'water_contents' %>
+<div class='row-fluid'>
+  <div class='span6'>
+    <u><h2><%= @recipe.name %></h2></u>
+    <i><font size=-1>(Created by <%= @recipe.user.email %>)</font></i>
 
-<u><h2><%= @recipe.name %></h2></u>
-<i><font size=-1>(Created by <%= @recipe.user.email %>)</font></i>
+    <u><h4>Ingredients</h4></u>
+    <ul>
+      <% @recipe.ingredients.each do |ingredient| %>
+        <li><%= "#{ingredient.recipe_weight_percentage}% #{ingredient.name}"%></li>
+      <% end %>
+    </ul>
+    <br />
+    <u><h4>Timeline</h4></u>
 
-<u><h4>Ingredients</h4></u>
-<ul>
-  <% @recipe.ingredients.each do |ingredient| %>
-    <li><%= "#{ingredient.recipe_weight_percentage}% #{ingredient.name}"%></li>
-  <% end %>
-</ul>
-<br />
-<u><h4>Timeline</h4></u>
+    <strong>Curing:</strong><br />
+    Days needed: <%= @recipe.expected_curing_time %><br /><br />
 
-<strong>Curing:</strong><br />
-Days needed: <%= @recipe.expected_curing_time %><br /><br />
-
-<% if @recipe.fermented %>
-  <strong>Fermenting:</strong><br />
-  Days needed: <%= @recipe.expected_fermenting_time %><br />
-  Temperature needed: <%= @recipe.fermentation_temperature %>° Celsius<br />
-  Humidity needed: <%= @recipe.fermentation_humidity %>%<br /><br />
-<% end %>
-
-<strong>Drying/hanging:</strong><br />
-Days needed: <%= @recipe.expected_curing_time %><br />
-Default temperature needed: <%= @recipe.default_drying_temperature %>° Celsius<br />
-Default humidity needed: <%= @recipe.default_drying_humidity %>%
-<br />
-<br />
-
-<u><h4>Directions</h4></u>
-<%= @recipe.directions %>
-
-<h3><%= link_to "Edit this recipe", edit_recipe_url(@recipe) %></h3>
-
-<% if @recipe.meats.any? %>
-  <h3>Meats using this recipe:</h3>
-  <ul>
-    <% @recipe.meats.each do |meat| %>
-      <li><%= link_to (meat.name || 'Unnamed'), meat_url(meat)%></li>
+    <% if @recipe.fermented %>
+      <strong>Fermenting:</strong><br />
+      Days needed: <%= @recipe.expected_fermenting_time %><br />
+      Temperature needed: <%= @recipe.fermentation_temperature %>° Celsius<br />
+      Humidity needed: <%= @recipe.fermentation_humidity %>%<br /><br />
     <% end %>
-  </ul>
-<% end %>
 
-<%= link_to "Fork this recipe!", fork_recipe_url(@recipe) %><br />
-<%= link_to "Create a meat using this recipe!", new_meat_url(recipe_id: @recipe.id) %>
+    <strong>Drying/hanging:</strong><br />
+    Days needed: <%= @recipe.expected_curing_time %><br />
+    Default temperature needed: <%= @recipe.default_drying_temperature %>° Celsius<br />
+    Default humidity needed: <%= @recipe.default_drying_humidity %>%
+    <br />
+    <br />
+
+    <u><h4>Directions</h4></u>
+    <%= @recipe.directions %>
+
+    <h3><%= link_to "Edit this recipe", edit_recipe_url(@recipe) %></h3>
+
+    <% if @recipe.meats.any? %>
+      <h3>Meats using this recipe:</h3>
+      <ul>
+        <% @recipe.meats.each do |meat| %>
+          <li><%= link_to (meat.name || 'Unnamed'), meat_url(meat)%></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <%= link_to "Fork this recipe!", fork_recipe_url(@recipe) %><br />
+    <%= link_to "Create a meat using this recipe!", new_meat_url(recipe_id: @recipe.id) %>
+  </div>
+  <%= render 'water_contents' %>
+</div>
