@@ -24,6 +24,12 @@
         <li><%= link_to meat.name, meat_path(meat) %></li>
       <% end %>
     </ul>
+    <ul class="nav nav-list well">
+      <li class="nav-header">Your recipes</li>
+      <% current_user.recipes.each do |recipe| %>
+        <li><%= link_to recipe.name, recipe_path(recipe) %></li>
+      <% end %>
+    </ul>
   </div>
   <div class="span6">
     <div>
