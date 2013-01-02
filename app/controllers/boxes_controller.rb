@@ -1,7 +1,7 @@
 class BoxesController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: [:create, :photo, :report, :set_points]
 
-  before_filter :authenticate_user!, only: [:update]
+  before_filter :authenticate_user!, only: [:edit, :update]
   before_filter :authorize_api, only: [:create, :photo, :report, :set_points]
   before_filter :find_box, except: :create
 
