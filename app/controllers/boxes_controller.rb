@@ -10,6 +10,9 @@ class BoxesController < ApplicationController
     render :json => { box_id: @box.id }
   end
 
+  def edit
+  end
+
   def photo
     @box.tweet params[:image_file]
     head :ok

@@ -1,4 +1,4 @@
-<% if current_user %>
+<% if user_signed_in? %>
   <%= form_for @team do |f| %>
     Name: <%= f.text_field :name, value: @team.name %>  <%= f.submit 'Save' %>
   <% end %>

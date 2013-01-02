@@ -1,5 +1,5 @@
 <%= render 'water_contents' %>
 
-<h1>Edit your recipe for <%= @recipe.name %></h1>
+<h1>Edit your recipe for <%= link_to @recipe.name, recipe_url(@recipe) %></h1>
 
 <%= render 'recipe_form', recipe: @recipe %>

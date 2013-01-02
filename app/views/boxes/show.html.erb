@@ -3,14 +3,20 @@
 <% end %>
 <%= render :partial => 'charts' %>
 
-<%= form_for @box do |f| %>
-  Name: <%= f.text_field :name, value: @box.name %><br />
-  Master meat: <%= f.collection_select :master_meat_id, @box.meats.all, :id, :name, prompt: true %><br />
-  Active: <%= f.check_box :active, value: @box.active %><br /><br />
-  <%= f.submit 'Save' %>
+<h3>Box info:</h3>
+Name: <%= @box.name %><br />
+Team: <%= link_to(@box.team.name, team_url(@box.team)) if @box.team %><br />
+Master meat: <%= link_to(@box.master_meat.name, meat_url(@box.master_meat)) if @box.master_meat %><br />
+Active: <%= @box.active ? "True" : "False" %><br />
+<% if user_signed_in? %>
+  <%= form_for @box do |f| %>
+    <%= f.hidden_field :active, value: !@box.active %>
+    <%= f.submit @box.active ? 'Deactivate' : 'Activate' %>
+  <% end %>
+  <%= link_to "Edit box info", edit_box_url(@box) %>
 <% end %>
 
-<h1>Meats in this box:</h1>
+<h3>Meats in this box:</h3>
 <ul>
   <% @box.meats.each do |meat| %>
     <li><%= link_to (meat.name || 'Unnamed'), meat_url(meat)%></li>
