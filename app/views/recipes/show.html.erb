@@ -1,7 +1,7 @@
 <div class='row-fluid'>
   <div class='span6'>
     <u><h2><%= @recipe.name %></h2></u>
-    <i><font size=-1>(Created by <%= @recipe.user.email %>)</font></i>
+    <i><font size=-1>(Created by <%= link_to @recipe.user.email, user_url(@recipe.user) %>)</font></i>
 
     <u><h4>Ingredients</h4></u>
     <ul>
