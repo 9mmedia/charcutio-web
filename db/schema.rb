@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121229005735) do
+ActiveRecord::Schema.define(:version => 20130102183743) do
 
   create_table "boxes", :force => true do |t|
     t.string   "name"
@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(:version => 20121229005735) do
   create_table "recipes", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.integer  "team_id"
     t.integer  "initial_water_percentage"
     t.boolean  "fermented"
     t.integer  "approximate_diameter"
