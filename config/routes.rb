@@ -13,4 +13,5 @@ CharcutioWeb::Application.routes.draw do
   resources :meats
   resources :recipes
   match 'recipes/:id/fork' => 'recipes#fork', as: :fork_recipe
+  resources :users, only: :show
 end

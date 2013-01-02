@@ -1,0 +1,32 @@
+<h2><u><%= @user.email %></u></h2>
+
+<h4>Boxes</h4>
+<ul>
+  <% @user.boxes.each do |box| %>
+    <li><%= link_to box.name, box_path(box) %></li>
+  <% end %>
+</ul>
+<h4>Teams</h4>
+<ul>
+  <% @user.teams.each do |team| %>
+    <li><%= link_to team.name, team_path(team) %></li>
+  <% end %>
+</ul>
+<h4>Meat Children</h4>
+<ul>
+  <% @user.meats.each do |meat| %>
+    <li><%= link_to meat.name, meat_path(meat) %></li>
+  <% end %>
+</ul>
+<h4>Team Meats</h4>
+<ul>
+  <% @user.box_meats.each do |meat| %>
+    <li><%= link_to meat.name, meat_path(meat) %></li>
+  <% end %>
+</ul>
+<h4>Recipes</h4>
+<ul>
+  <% @user.recipes.each do |recipe| %>
+    <li><%= link_to recipe.name, recipe_path(recipe) %></li>
+  <% end %>
+</ul>
