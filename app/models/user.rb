@@ -5,12 +5,19 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :teammates,
+    dependent: :destroy
   has_many :teams,
     through: :teammates
   has_many :boxes,
     through: :teams
   has_many :meats
-  has_many :boxes
+  has_many :team_meats,
+    through: :teams,
+    source: :meats
+  has_many :box_meats,
+    through: :boxes,
+    source: :meats
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
