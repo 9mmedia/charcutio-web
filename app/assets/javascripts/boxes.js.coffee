@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 types =
-  temp: "Temperature (F)"
+  temperature: "Temperature (C)"
   humidity: "Humidity (%)"
   weight: "Weight (lbs)"
 
