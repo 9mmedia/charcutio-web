@@ -19,7 +19,7 @@ class BoxesController < ApplicationController
   end
 
   def report
-    data_point = DataPoint.new(box: @box, data_type: params[:type], value: params[:value])
+    data_point = DataPoint.create!(box: @box, data_type: params[:type], value: params[:value])
     @box.data_points << data_point
     render :json => { result: "success" }
   end
