@@ -77,7 +77,7 @@ class Box < ActiveRecord::Base
   end
 
   def data_for(type, span)
-    data = data_points.where(data_type: type).order("created_at DESC")
+    data = data_points.where('data_type IN (?)', [type, DataPoint::RELAY_TYPES[type.to_sym]].flatten).order("created_at DESC")
     range = 1.day.ago..Time.now
     case span
     when :day

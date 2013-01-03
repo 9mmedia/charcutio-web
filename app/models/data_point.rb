@@ -1,6 +1,9 @@
 class DataPoint < ActiveRecord::Base
   belongs_to :box
 
+   RELAY_TYPES = {temperature: ['freezer'],
+                  humidity: ['humidifier', 'dehumidifier']}
+
   def self.humidity
     where data_type: 'humidity'
   end

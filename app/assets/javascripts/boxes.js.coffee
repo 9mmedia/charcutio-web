@@ -2,18 +2,37 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-types =
+sensor_types =
   temperature: "Temperature (C)"
   humidity: "Humidity (%)"
   weight: "Weight (lbs)"
 
+relay_types =
+  temperature: "Freezer (0: off, 100: on)"
+  humidity: "Humidifier (0: off, 100: on)"
+
+secondary_relay_types =
+  humidity: "Dehumidifier (0: off, 100: on)"
+
+createRow = (tuple, column_count) ->
+  row = [new Date(tuple.time * 1000), tuple.value]
+  if column_count > 2
+    row.push tuple.relay0
+  if column_count > 3
+    row.push tuple.relay1
+  row
+
 drawChart = (json) ->
   table = new google.visualization.DataTable()
   table.addColumn('datetime', 'Time')
-  table.addColumn('number', types[json["type"]])
-  tuples = json.data
-  rows = for tuple in tuples
-    [new Date(tuple.time * 1000), tuple.value]
+  table.addColumn('number', sensor_types[json["type"]])
+  if relay_types[json["type"]]
+    table.addColumn('number', relay_types[json["type"]])
+  if secondary_relay_types[json["type"]]
+    table.addColumn('number', secondary_relay_types[json["type"]])
+  column_count = table.getNumberOfColumns()
+  rows = for tuple in json.data
+    createRow(tuple, column_count)
   table.addRows(rows)
   options =
     title: json.type
