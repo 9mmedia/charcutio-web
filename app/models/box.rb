@@ -49,7 +49,7 @@ class Box < ActiveRecord::Base
   end
 
   def goal_weight
-    @goal_weight ||= initial_weight/3.0
+    @goal_weight ||= initial_weight - initial_weight/3.0
   end
 
   def initial_weight
