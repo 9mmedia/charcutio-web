@@ -1,8 +1,6 @@
 class DataPoint < ActiveRecord::Base
   belongs_to :box
 
-  before_save :convert_boolean_value_to_float
-
   def self.humidity
     where data_type: 'humidity'
   end
@@ -15,10 +13,10 @@ class DataPoint < ActiveRecord::Base
     where data_type: 'weight'
   end
 
-  private
-
-    def convert_boolean_value_to_float
-      self.value = 0.0 if ['false', ''].include?(self.value)
-      self.value = 100.0 if self.value == 'true'
-    end
+  def value=(val)
+    # Overwritten so we can first convert boolean values to floats
+    val = 0.0 if ['false', ''].include?(val)
+    val = 100.0 if val == 'true'
+    write_attribute :value, val
+  end
 end
