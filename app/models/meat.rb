@@ -43,11 +43,15 @@ class Meat < ActiveRecord::Base
   def get_set_points
     if in_fermenting_period?
       {temperature: fermentation_temperature, humidity: fermentation_humidity}
-    elsif current_weight.present?
+    elsif master_meat? && current_weight.present?
       {temperature: default_drying_temperature, humidity: current_humidity_needed}
     else
       {temperature: default_drying_temperature, humidity: default_drying_humidity}
     end
+  end
+
+  def master_meat?
+    box && (self.id == box.master_meat_id)
   end
 
   def name
