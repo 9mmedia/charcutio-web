@@ -1,6 +1,7 @@
 class RecipesController < ApplicationController
   before_filter :find_recipe, only: [:edit, :fork, :show, :update]
   before_filter :authenticate_user!, except: [:index, :show]
+  before_filter :authenticate_recipe_owner, only: [:edit, :update]
 
   def create
     if @recipe = current_user.recipes.create!(params[:recipe])
@@ -43,6 +44,10 @@ class RecipesController < ApplicationController
   end
 
   private
+
+    def authenticate_recipe_owner
+      redirect_to root_url unless current_user == @recipe.user
+    end
 
     def find_recipe
       @recipe = Recipe.find params[:id]

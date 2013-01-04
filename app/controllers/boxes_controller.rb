@@ -4,6 +4,7 @@ class BoxesController < ApplicationController
   before_filter :authenticate_user!, only: [:edit, :update]
   before_filter :authorize_api, only: [:create, :photo, :report, :set_points]
   before_filter :find_box, except: :create
+  before_filter :authenticate_box_owner, only: [:edit, :update]
 
   def create
     @box = Box.create(name: params[:name], user: @user)
@@ -61,6 +62,12 @@ class BoxesController < ApplicationController
     def authorize_api
       @user = User.find_by_api_key params[:api_key]
       render :json => { error: "Invalid api key" } unless @user
+    end
+
+    def authenticate_box_owner
+      unless current_user == @box.user || current_user.boxes.include?(@box)
+        redirect_to root_url
+      end
     end
 
     def find_box

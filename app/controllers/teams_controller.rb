@@ -1,6 +1,7 @@
 class TeamsController < ApplicationController
-  before_filter :find_team, except: :create
   before_filter :authenticate_user!
+  before_filter :find_team, except: :create
+  before_filter :authenticate_teammate, only: :update
 
   def create
     if @team = current_user.teams.create!(params[:team])
@@ -22,6 +23,10 @@ class TeamsController < ApplicationController
   end
 
   private
+
+    def authenticate_teammate
+      redirect_to root_url unless current_user.teams.include?(@team)
+    end
 
     def find_team
       @team = Team.find params[:id]

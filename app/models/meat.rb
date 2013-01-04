@@ -15,7 +15,7 @@ class Meat < ActiveRecord::Base
   end
 
   def cancel=(value)
-    remove_timeline if ["1", 1, true].include?(value)
+    remove_timeline if ["1", 'true', 1, true].include?(value)
   end
 
   def check_if_completed
@@ -67,13 +67,13 @@ class Meat < ActiveRecord::Base
   end
 
   def start=(value)
-    set_timeline if ["1", 1, true].include?(value)
+    set_timeline if ["1", 'true', 1, true].include?(value)
   end
 
   private
 
     def curing_period_over?
-      Time.current >= (start_date + expected_curing_time.days)
+      Time.current >= (start_date + recipe.expected_curing_time.days)
     end
 
     def current_water_weight
@@ -111,7 +111,7 @@ class Meat < ActiveRecord::Base
     def set_timeline
       self.start_date = Time.current
       self.fermenting_start_date = start_date + recipe.expected_curing_time.days
-      self.drying_start_date = fermenting_start_date + recipe.expected_fermenting_time.days
+      self.drying_start_date = fermenting_start_date + (recipe.expected_fermenting_time || 0).days
       self.end_date = drying_start_date + recipe.expected_drying_time.days
       save!
     end

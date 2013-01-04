@@ -1,16 +1,9 @@
 <h1><%= @meat.name %></h1>
 
-
-<%= form_for @meat do |f| %>
-  Name: <%= f.text_field :name, value: @meat.name %><br />
-  Recipe: <%= f.collection_select :recipe_id, Recipe.all, :id, :name, prompt: true %><br />
-  Box: <%= f.collection_select :box_id, Box.all, :id, :name, prompt: true, include_blank: true %><br />
-  <% if @meat.start_date %>
-    Cancel meat: <%= f.check_box :cancel, value: false %>
-  <% else %>
-    Start today: <%= f.check_box :start, value: false %>
-  <% end %>
-  <br />
-  <br />
-  <%= f.submit 'Save' %>
+Recipe: <%= link_to @meat.recipe.name, recipe_url(@meat.recipe) %><br />
+Box: <%= link_to @meat.box.name, box_url(@meat.box) %><br />
+Starting weight (in grams): <%= @meat.initial_weight %><br />
+Started on: <%= @meat.start_date %><br />
+<% if current_user.has_meat_authority?(@meat) %>
+  <%= link_to "Edit or activate meat", edit_meat_url(@meat) %>
 <% end %>

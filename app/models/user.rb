@@ -26,6 +26,10 @@ class User < ActiveRecord::Base
 
   before_create :generate_api_key
 
+  def has_meat_authority?(meat)
+    meat.user_id == self.id || team_meats.include?(meat) || box_meats.include?(meat)
+  end
+
   private
 
   def generate_api_key
