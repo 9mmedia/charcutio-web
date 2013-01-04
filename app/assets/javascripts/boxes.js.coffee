@@ -5,7 +5,7 @@
 sensor_types =
   temperature: "Temperature (C)"
   humidity: "Humidity (%)"
-  weight: "Weight (lbs)"
+  weight: "Weight (g)"
 
 relay_types =
   temperature: "Freezer (0: off, 100: on)"
