@@ -13,7 +13,7 @@ class TwitterAccount
       else
         tweet_without_image(message)
       end
-    end rescue return nil
+    end rescue nil
   end
 
   private

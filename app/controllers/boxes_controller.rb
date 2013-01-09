@@ -15,7 +15,7 @@ class BoxesController < ApplicationController
   end
 
   def photo
-    @box.tweet params[:filedata]
+    @box.tweet params[:filedata].tempfile
     head :ok
   end
 
