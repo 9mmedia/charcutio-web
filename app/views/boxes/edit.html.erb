@@ -1,7 +1,7 @@
 <h1>Edit box info for <%= link_to @box.name, box_url(@box) %></h1>
 <%= form_for @box do |f| %>
   Name: <%= f.text_field :name, value: @box.name %><br />
-  Team: <%= f.collection_select :id, Team.all, :id, :name, prompt: true %><br />
+  Team: <%= f.collection_select :team_id, Team.all, :id, :name, prompt: true %><br />
   Master meat: <%= f.collection_select :master_meat_id, @box.meats.all, :id, :name, prompt: true %><br />
   Active: <%= f.check_box :active, value: @box.active %><br /><br />
   <%= f.submit 'Save' %>

@@ -47,7 +47,6 @@
     <div>
       <hr />
       <%= form_for @team do |f| %>
-        <%= f.hidden_field :user_id, value: current_user.id %>
         Join a team: <%= f.collection_select :id, Team.all, :id, :name, prompt: true %> <%= f.submit 'Save' %>
       <% end %>
       <%= form_for @team do |f| %>

@@ -5,4 +5,8 @@ class Team < ActiveRecord::Base
     dependent: :destroy
   has_many :users,
     through: :teammates
+
+  def self.find_or_create(params)
+    find(params[:id]) || create!(name: params[:name])
+  end
 end

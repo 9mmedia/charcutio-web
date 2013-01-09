@@ -4,7 +4,8 @@ class TeamsController < ApplicationController
   before_filter :authenticate_teammate, only: :update
 
   def create
-    if @team = current_user.teams.create!(params[:team])
+    if @team = Team.find_or_create(params[:team])
+      @team.users << current_user
       redirect_to team_url @team
     else
       redirect_to root_url
