@@ -80,6 +80,8 @@ class Box < ActiveRecord::Base
     data = data_points.where('data_type IN (?)', [type, DataPoint::RELAY_TYPES[type.to_sym]].flatten).order("created_at DESC")
     range = 1.day.ago..Time.now
     case span
+    when :six_hours
+      range = 6.hours.ago..Time.now
     when :day
       range = 1.day.ago..Time.now
     when :week
