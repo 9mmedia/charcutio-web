@@ -1,8 +1,13 @@
+require 'meat_markov'
+
 class TwitterAccount
-  MESSAGES = %w(#pigpigpig #MEAT! #sohungry #whencanweeat #omnomnom)
+  MESSAGES = %w(#pigpigpig #MEAT! #sohungry #whencanweeat #omnomnom #KeepYourEyeOnTheMeat #MeatBusted #SomeoneBeStealingOurMeat)
 
   def self.random_message(name_hashtag)
-    "#{MESSAGES.sample}#{name_hashtag}"
+    # 21 characters for the image url
+    # 10 characters for the cropped name hashtag
+    # plus 2 spaces = 33 characters already used up
+    "#{MeatMarkov.random_tweet_text(107)} #{name_hashtag[0..9]}"
   end
 
   def self.tweet(name_hashtag, image_file=nil)
