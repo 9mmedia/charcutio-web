@@ -3,7 +3,7 @@ require 'yaml'
 module MeatMarkov
 
   def self.load_parsed_words
-    if File.exists?('meat_markov_data')
+    if File.exists?("#{Rails.root}/lib/meat_markov_data")
       File.open("#{Rails.root}/lib/meat_markov_data", 'r') { |f| @parsed_words = YAML::load f.read }
     end
   end
