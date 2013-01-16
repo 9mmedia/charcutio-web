@@ -7,7 +7,7 @@ class TwitterAccount
     # 21 characters for the image url
     # 10 characters for the cropped name hashtag
     # plus 2 spaces = 33 characters already used up
-    "#{MeatMarkov.random_tweet_text(107)} #{name_hashtag[0..9]}"
+    "#{MeatMarkov.random_text(107)} #{name_hashtag[0..9]}"
   end
 
   def self.tweet(name_hashtag, image_file=nil)
