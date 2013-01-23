@@ -16,9 +16,9 @@ class UserMailer < ActionMailer::Base
     mail(to: team.users.map(&:email), subject: "Your meat is done fermenting!")
   end
 
-  def meat_down_email(box, team, last_update_time)
+  def meat_down_email(box, team, dead_data_point)
     @box = box
-    @last_update_time = last_update_time
+    @dead_data_point = dead_data_point
     mail(to: team.users.map(&:email), subject: "DANGER - MEAT DOWN!")
   end
 

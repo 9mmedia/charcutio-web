@@ -25,8 +25,13 @@ class Box < ActiveRecord::Base
   end
 
   def check_dead_mans_switch
-    @last_update_time = data_points.order('created_at desc').first.created_at
-    pull_dead_mans_switch if @last_update_time >= 2.hours.ago
+    latest_data_points = []
+    %w(humidity humidifier dehumidifier temperature freezer).each do |data_type|
+      latest_data_points << data_points.where(data_type: data_type).order('created_at desc').first
+    end
+    if @dead_data_point = latest_data_points.find { |data_point| data_point.created_at >= 2.hours.ago }
+      pull_dead_mans_switch
+    end
   end
 
   def check_meat_statuses
@@ -65,7 +70,7 @@ class Box < ActiveRecord::Base
   end
 
   def pull_dead_mans_switch
-    UserMailer.meat_down_email(self, team, @last_update_time).deliver
+    UserMailer.meat_down_email(self, team, @dead_data_point).deliver
   end
 
   def name_hashtag
