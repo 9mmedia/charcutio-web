@@ -1,4 +1,4 @@
-<div id="graph" class="row-fluid" data-box-id="<%= @box.id %>" data-graph-type="temperature" data-graph-span="day">
+<div id="graph" class="row-fluid" data-box-id="<%= @box.id %>" data-graph-type="temperature" data-graph-span="six_hours">
   <div class="span12">
     <ul class="nav nav-tabs">
       <li class="graph-type active" id="temp-tab" >
@@ -25,7 +25,7 @@
         <li class="time" id="six-months"><a tabindex="-1" href="#" data-span="six_months">Six Months</a></li>
       </ul>
     </div>
-    <div id="rendered-graph">
+    <div id="rendered-graph" style='width: 700px; height: 240px;'>
     </div>
   </div>
 </div>

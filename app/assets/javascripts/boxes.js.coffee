@@ -57,6 +57,8 @@ initialLoad = () ->
 google.load("visualization", "1", {packages:["corechart"]})
 google.setOnLoadCallback(initialLoad)
 
+setInterval loadData, 15000
+
 $(->
   $(".graph-type a").click((e) ->
     newType = $(this).data("type")
