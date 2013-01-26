@@ -19,7 +19,7 @@ class Meat < ActiveRecord::Base
   end
 
   def check_if_completed
-    if reached_goal_weight? || reached_end_date?
+    if reached_end_date? # || reached_goal_weight?
       UserMailer.completed_meat_email(self, team).deliver
     elsif fermenting_period_over?
       UserMailer.fermenting_completed_email(self, team).deliver
