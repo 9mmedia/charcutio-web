@@ -3,18 +3,22 @@ require 'meat_markov'
 class TwitterAccount
   MESSAGES = %w(#pigpigpig #MEAT! #sohungry #whencanweeat #omnomnom #KeepYourEyeOnTheMeat #MeatBusted #SomeoneBeStealingOurMeat)
 
+  def self.message_with_data(name_hashtag, data, remaining_days)
+    "temperature: #{data[:temperature]}, humidity: #{data[:humidity]}, days until meat: #{remaining_days} #{name_hashtag}"
+  end
+
   def self.random_message(name_hashtag)
+    "#{MeatMarkov.random_text(105)} #{name_hashtag}"
+  end
+
+  def self.tweet(args={name_hashtag: nil, image_file: nil, data: nil, remaining_days: nil})
     # 21 characters for the image url
     # 12 characters for the cropped name hashtag
     # plus 2 spaces = 33 characters already used up
-    "#{MeatMarkov.random_text(105)} #{name_hashtag[0..11]}"
-  end
-
-  def self.tweet(name_hashtag, image_file=nil)
-    message = random_message(name_hashtag)
+    message = message_with_data args[:name_hashtag][0..11], args[:data], args[:remaining_days]
     Timeout::timeout(5) do
       if image_file
-        tweet_with_image(message, image_file)
+        tweet_with_image(message, args[:image_file])
       else
         tweet_without_image(message)
       end
