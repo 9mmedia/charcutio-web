@@ -49,6 +49,10 @@ class Box < ActiveRecord::Base
     data_points.weight.order('created_at desc').first.value
   end
 
+  def days_remaining_until_first_meat_done
+    meats.order('end_date asc').first.days_remaining_on_timeline
+  end
+
   def get_set_points
     (master_meat || meats.first).get_set_points
   end
@@ -78,7 +82,12 @@ class Box < ActiveRecord::Base
   end
 
   def tweet(image_file=nil)
-    TwitterAccount.tweet name_hashtag, image_file
+    TwitterAccount.tweet name_hashtag: name_hashtag, image_file: image_file, data: tweet_data, remaining_days: days_remaining_until_first_meat_done
+  end
+
+  def tweet_data
+    {temperature: data_points.where(data_type: 'humidity').order('created_at desc').first.try(:value),
+     humidity: data_points.where(data_type: 'temperature').order('created_at desc').first.try(:value)}
   end
 
   def data_for(type, span)
