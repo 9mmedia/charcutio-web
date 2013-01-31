@@ -40,6 +40,10 @@ class Meat < ActiveRecord::Base
     @current_weight ||= box.current_weight if box
   end
 
+  def days_remaining_on_timeline
+    ((end_date - Time.current)/1.day).round
+  end
+
   def get_set_points
     if in_fermenting_period?
       {temperature: fermentation_temperature, humidity: fermentation_humidity}
