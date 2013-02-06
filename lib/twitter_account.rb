@@ -17,7 +17,7 @@ class TwitterAccount
     # plus 2 spaces = 33 characters already used up
     message = message_with_data args[:name_hashtag][0..11], args[:data], args[:remaining_days]
     Timeout::timeout(5) do
-      if image_file
+      if args[:image_file]
         tweet_with_image(message, args[:image_file])
       else
         tweet_without_image(message)
