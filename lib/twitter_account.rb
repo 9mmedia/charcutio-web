@@ -4,7 +4,7 @@ class TwitterAccount
   MESSAGES = %w(#pigpigpig #MEAT! #sohungry #whencanweeat #omnomnom #KeepYourEyeOnTheMeat #MeatBusted #SomeoneBeStealingOurMeat)
 
   def self.message_with_data(name_hashtag, data, remaining_days)
-    "temperature: #{data[:temperature]}, humidity: #{data[:humidity]}, days until meat: #{remaining_days} #{name_hashtag}"
+    "temperature: #{data[:temperature]}° C, humidity: #{data[:humidity]}%, days until meat: #{remaining_days} #{name_hashtag}"
   end
 
   def self.random_message(name_hashtag)

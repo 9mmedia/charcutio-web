@@ -86,8 +86,8 @@ class Box < ActiveRecord::Base
   end
 
   def tweet_data
-    {temperature: data_points.where(data_type: 'humidity').order('created_at desc').first.try(:value),
-     humidity: data_points.where(data_type: 'temperature').order('created_at desc').first.try(:value)}
+    {temperature: data_points.where(data_type: 'temperature').order('created_at desc').first.try(:value),
+     humidity: data_points.where(data_type: 'humidity').order('created_at desc').first.try(:value)}
   end
 
   def data_for(type, span)
