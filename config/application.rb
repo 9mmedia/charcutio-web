@@ -49,5 +49,7 @@ module CharcutioWeb
     config.generators do |g|
       g.orm :active_record
     end
+
+    config.action_mailer.default_url_options = { host: (Rails.env.production? ? 'charcut.io' : 'localhost:3000') }
   end
 end
