@@ -1,5 +1,6 @@
 class UserMailer < ActionMailer::Base
   default from: "info@charcut.io"
+  default_url_options[:host] = request.host_with_port
 
   def completed_meat_email(meat, team)
     @meat = meat
