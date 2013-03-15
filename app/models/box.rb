@@ -110,6 +110,12 @@ class Box < ActiveRecord::Base
     data = data.where(created_at: range)
   end
 
+  def data_since(type, since)
+    range = since..Time.now
+    data = data_points.where('data_type IN (?)', [type, DataPoint::RELAY_TYPES[type.to_sym]].flatten).order("created_at DESC")
+    data = data.where(created_at: range)
+  end
+
   private
 
     def check_sensor_data_subset(data_type, desired_value)

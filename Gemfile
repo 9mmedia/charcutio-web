@@ -33,6 +33,7 @@ group :test, :development do
   gem 'shoulda-matchers', '1.2.0'
   gem 'mocha', '0.10.5'
   gem 'sqlite3'
+  gem 'whenever'
 end
 
 group :production do

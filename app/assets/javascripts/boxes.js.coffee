@@ -1,6 +1,7 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+data = []
 
 sensor_types =
   temperature: "Temperature (C)"
@@ -41,15 +42,22 @@ drawChart = (json) ->
       slantedText: true
       textStyle:
         fontSize: 10
-
+  data = json.data
   chart = new google.visualization.LineChart(document.getElementById('rendered-graph'))
   chart.draw(table, options)
+
+updateChart = (json) ->
+  json.data.push data...
+  drawChart(json)
 
 loadData = () ->
   boxId = $("#graph").data("boxId")
   span = $("#graph").data("graphSpan")
   type = $("#graph").data("graphType")
-  $.getJSON("/boxes/#{boxId}/data/#{type}", { span: span }, drawChart)
+  if (data.length > 0)
+    $.getJSON("/boxes/#{boxId}/data_since/#{type}", { since: data[0].time }, updateChart)
+  else
+    $.getJSON("/boxes/#{boxId}/data/#{type}", { span: span }, drawChart)
 
 initialLoad = () ->
   loadData()

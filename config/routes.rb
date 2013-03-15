@@ -7,6 +7,7 @@ CharcutioWeb::Application.routes.draw do
       post :report
       get :set_points
       match 'data/:type' => "boxes#data" # /boxes/:id/data/:type
+      match 'data_since/:type' => "boxes#data_since" # /boxes/:id/data_since/:type
     end
   end
   resources :teams
