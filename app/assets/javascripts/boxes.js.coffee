@@ -69,12 +69,14 @@ setInterval loadData, 15000
 
 $(->
   $(".graph-type a").click((e) ->
+    data = []
     newType = $(this).data("type")
     $("#graph").data("graphType", newType)
     loadData()
   )
 
   $(".time a").click((e) ->
+    data = []
     newSpan = $(this).data("span")
     $("#graph").data("graphSpan", newSpan)
     loadData()
