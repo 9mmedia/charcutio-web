@@ -6,7 +6,9 @@ data = []
 sensor_types =
   temperature: "Temperature (C)"
   humidity: "Humidity (%)"
-  weight: "Weight (g)"
+  weight_0: "Weight 1"
+  weight_1: "Weight 2"
+  weight_2: "Weight 3"
 
 relay_types =
   temperature: "Freezer (0: off, 100: on)"
