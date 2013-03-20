@@ -2,6 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 data = []
+chart = {}
 
 sensor_types =
   temperature: "Temperature (C)"
@@ -18,7 +19,7 @@ secondary_relay_types =
   humidity: "Dehumidifier (0: off, 100: on)"
 
 createRow = (tuple, column_count) ->
-  row = [new Date(tuple.time * 1000), tuple.value]
+  row = [tuple.time * 1000, tuple.value]
   if column_count > 2
     row.push tuple.relay0
   if column_count > 3
@@ -26,38 +27,84 @@ createRow = (tuple, column_count) ->
   row
 
 drawChart = (json) ->
-  table = new google.visualization.DataTable()
-  table.addColumn('datetime', 'Time')
-  table.addColumn('number', sensor_types[json["type"]])
-  if relay_types[json["type"]]
-    table.addColumn('number', relay_types[json["type"]])
-  if secondary_relay_types[json["type"]]
-    table.addColumn('number', secondary_relay_types[json["type"]])
-  column_count = table.getNumberOfColumns()
-  rows = for tuple in json.data
-    createRow(tuple, column_count)
-  table.addRows(rows)
-  options =
-    title: json.type
-    hAxis:
-      format: "M/d/yy h:mm a"
-      slantedText: true
-      textStyle:
-        fontSize: 10
   data = json.data
-  chart = new google.visualization.LineChart(document.getElementById('rendered-graph'))
-  chart.draw(table, options)
+  chartData = for point in data #[data.length-1..0] by -1
+     createRow(point, 1)
+  chart = new Highcharts.Chart({
+      chart: {
+          renderTo: 'rendered-graph',
+          type: 'spline',
+          zoomType: 'x',
+          spacingRight: 20
+      },
+      title: {
+          text: ''
+      },
+      subtitle: {
+              ''
+      },
+      xAxis: {
+          type: 'datetime',
+          title: {
+              text: null
+          }
+      },
+      yAxis: {
+          title: {
+              text: ''
+          },
+          plotLines: [{
+              value: 0,
+              width: 1,
+              color: '#880000'
+          }],
+          showFirstLabel: false
+      },
+      tooltip: {
+          shared: true
+      },
+      legend: {
+          enabled: false  
+      },
+      plotOptions: {
+        spline: {
+          lineWidth: 1,
+          states: {
+              hover: {
+                  lineWidth: 2
+              }
+          },
+          marker: {
+              enabled: false,
+              states: {
+                  hover: {
+                      enabled: true,
+                      symbol: 'circle',
+                      radius: 5,
+                      lineWidth: 1
+                  }
+              }
+          }
+        }
+      },
+
+      series: [{
+          name: '',
+          data: chartData
+      }]
+  })
 
 updateChart = (json) ->
-  json.data.push data...
-  drawChart(json)
+  if json.data.length > 0
+    for tuple in json.data
+      chart.series[0].addPoint(createRow(tuple, 1),true,true)
 
 loadData = () ->
   boxId = $("#graph").data("boxId")
   span = $("#graph").data("graphSpan")
   type = $("#graph").data("graphType")
   if (data.length > 0)
-    $.getJSON("/boxes/#{boxId}/data_since/#{type}", { since: data[0].time }, updateChart)
+    $.getJSON("/boxes/#{boxId}/data_since/#{type}", { since: data[data.length-1].time }, updateChart)
   else
     $.getJSON("/boxes/#{boxId}/data/#{type}", { span: span }, drawChart)
 

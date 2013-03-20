@@ -93,6 +93,7 @@ class Box < ActiveRecord::Base
   def data_for(type, span)
     data = data_points.where('data_type IN (?)', [type, DataPoint::RELAY_TYPES[type.to_sym]].flatten).order("created_at DESC")
     range = 1.day.ago..Time.now
+    interval = ""
     case span
     when :six_hours
       range = 6.hours.ago..Time.now
@@ -100,20 +101,28 @@ class Box < ActiveRecord::Base
       range = 1.day.ago..Time.now
     when :week
       range = 1.week.ago..Time.now
+      #interval = "strftime('%m-%d-%H',created_at)"
+      interval = "to_char(created_at, 'MM-YY-DD-HH24')"
     when :month
       range = 1.month.ago..Time.now
+      #interval = "strftime('%m-%d-%H',created_at)"
+      interval = "to_char(created_at, 'MM-YY-DD-HH24')"
     when :three_months
       range = 3.months.ago..Time.now
+      #interval = "strftime('%m-%d',created_at)"
+      interval = "to_char(created_at, 'MM-YY-DD')"
     when :six_months
       range = 6.months.ago..Time.now
+      #interval = "strftime('%m-%d',created_at)"
+      interval = "to_char(created_at, 'MM-YY-DD')"
     end
-    data = data.where(created_at: range)
+    data = data.where(created_at: range).group(interval).limit(1000).reverse
   end
 
   def data_since(type, since)
-    range = since..Time.now
+    range = since+1..Time.now
     data = data_points.where('data_type IN (?)', [type, DataPoint::RELAY_TYPES[type.to_sym]].flatten).order("created_at DESC")
-    data = data.where(created_at: range)
+    data = data.where(created_at: range).limit(1000).reverse
   end
 
   private
