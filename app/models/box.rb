@@ -93,7 +93,7 @@ class Box < ActiveRecord::Base
   def data_for(type, span)
     data = data_points.where('data_type IN (?)', [type, DataPoint::RELAY_TYPES[type.to_sym]].flatten).order("created_at DESC")
     range = 1.day.ago..Time.now
-    interval = ""
+    interval = "id"
     case span
     when :six_hours
       range = 6.hours.ago..Time.now
@@ -117,7 +117,7 @@ class Box < ActiveRecord::Base
       interval = "to_char(created_at, 'MM-YY-DD')"
     end
     #data = data.where(created_at: range).group(interval).limit(1000).reverse
-    data = data.where(created_at: range).order(interval).find(:all, :select => "DISTINCT ON (#{interval}) *").reverse
+    data = data.where(created_at: range).order(interval).limit(1000).find(:all, :select => "DISTINCT ON (#{interval}) *").reverse
 
 
   end
