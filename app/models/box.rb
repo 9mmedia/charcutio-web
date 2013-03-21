@@ -91,9 +91,10 @@ class Box < ActiveRecord::Base
   end
 
   def data_for(type, span)
-    
+
     range = 1.day.ago..Time.now
-    interval = "id"
+    interval = "id" if connection.adapter_name == 'PostgreSQL'
+    interval = "created_at" if connection.adapter_name == 'SQLite'
     case span
     when :six_hours
       range = 6.hours.ago..Time.now
@@ -101,32 +102,34 @@ class Box < ActiveRecord::Base
       range = 1.day.ago..Time.now
     when :week
       range = 1.week.ago..Time.now
-      #interval = "strftime('%m-%d-%H',created_at)"
-      interval = "to_char(created_at, 'MM-YY-DD-HH24')"
+      interval = "strftime('%m-%d-%H',created_at)" if connection.adapter_name == 'SQLite'
+      interval = "to_char(created_at, 'MM-YY-DD-HH24')" if connection.adapter_name == 'PostgreSQL'
     when :month
       range = 1.month.ago..Time.now
-      #interval = "strftime('%m-%d-%H',created_at)"
-      interval = "to_char(created_at, 'MM-YY-DD-HH24')"
+      interval = "strftime('%m-%d-%H',created_at)" if connection.adapter_name == 'SQLite'
+      interval = "to_char(created_at, 'MM-YY-DD-HH24')" if connection.adapter_name == 'PostgreSQL'
     when :three_months
       range = 3.months.ago..Time.now
-      #interval = "strftime('%m-%d',created_at)"
-      interval = "to_char(created_at, 'MM-YY-DD')"
+      interval = "strftime('%m-%d',created_at)" if connection.adapter_name == 'SQLite'
+      interval = "to_char(created_at, 'MM-YY-DD')" if connection.adapter_name == 'PostgreSQL'
     when :six_months
       range = 6.months.ago..Time.now
-      #interval = "strftime('%m-%d',created_at)"
-      interval = "to_char(created_at, 'MM-YY-DD')"
+      interval = "strftime('%m-%d',created_at)" if connection.adapter_name == 'SQLite'
+      interval = "to_char(created_at, 'MM-YY-DD')" if connection.adapter_name == 'PostgreSQL'
     end
     data = data_points.where('data_type IN (?)', [type, DataPoint::RELAY_TYPES[type.to_sym]].flatten).order("#{interval} DESC")
-    #data = data.where(created_at: range).group(interval).limit(1000).reverse
-    data = data.where(created_at: range).limit(1000).find(:all, :select => "DISTINCT ON (#{interval}) *").reverse
+    data = data.where(created_at: range).group(interval).limit(1000).reverse if connection.adapter_name == 'SQLite'
+    data = data.where(created_at: range).limit(1000).find(:all, :select => "DISTINCT ON (#{interval}) *").reverse if connection.adapter_name == 'PostgreSQL'
 
-
+    data
   end
 
   def data_since(type, since)
     range = since+1..Time.now
     data = data_points.where('data_type IN (?)', [type, DataPoint::RELAY_TYPES[type.to_sym]].flatten).order("created_at DESC")
     data = data.where(created_at: range).limit(1000).reverse
+
+    data
   end
 
   private

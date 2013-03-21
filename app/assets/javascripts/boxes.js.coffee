@@ -29,7 +29,7 @@ createRow = (tuple, column_count) ->
 drawChart = (json) ->
   data = json.data
   chartData = for point in data #[data.length-1..0] by -1
-     createRow(point, 1)
+     createRow(point, 1) if point.value
   chart = new Highcharts.Chart({
       chart: {
           renderTo: 'rendered-graph',
@@ -96,6 +96,7 @@ drawChart = (json) ->
 
 updateChart = (json) ->
   if json.data.length > 0
+    data.push json.data...
     for tuple in json.data
       chart.series[0].addPoint(createRow(tuple, 1),true,true)
 
@@ -114,7 +115,7 @@ initialLoad = () ->
 google.load("visualization", "1", {packages:["corechart"]})
 google.setOnLoadCallback(initialLoad)
 
-setInterval loadData, 15000
+setInterval loadData, 5000
 
 $(->
   $(".graph-type a").click((e) ->
