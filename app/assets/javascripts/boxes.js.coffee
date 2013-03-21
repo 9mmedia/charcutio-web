@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 data = []
 chart = {}
+num_updates = 0
 
 sensor_types =
   temperature: "Temperature (C)"
@@ -96,6 +97,7 @@ drawChart = (json) ->
 
 updateChart = (json) ->
   if json.data.length > 0
+    num_updates++
     data.push json.data...
     for tuple in json.data
       chart.series[0].addPoint(createRow(tuple, 1),true,true)
@@ -105,7 +107,9 @@ loadData = () ->
   span = $("#graph").data("graphSpan")
   type = $("#graph").data("graphType")
   if (data.length > 0)
-    $.getJSON("/boxes/#{boxId}/data_since/#{type}", { since: data[data.length-1].time }, updateChart)
+    now = new Date
+    since = if num_updates == 0 then Math.floor(now.getTime()/1000)-60 else data[data.length-1].time
+    $.getJSON("/boxes/#{boxId}/data_since/#{type}", { since: since }, updateChart)
   else
     $.getJSON("/boxes/#{boxId}/data/#{type}", { span: span }, drawChart)
 
@@ -115,7 +119,7 @@ initialLoad = () ->
 google.load("visualization", "1", {packages:["corechart"]})
 google.setOnLoadCallback(initialLoad)
 
-setInterval loadData, 5000
+setInterval loadData,   5000
 
 $(->
   $(".graph-type a").click((e) ->
