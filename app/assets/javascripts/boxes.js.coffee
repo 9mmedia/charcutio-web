@@ -110,6 +110,7 @@ loadData = () ->
     since = if num_updates == 0 then Math.floor(new Date().getTime()/1000)-60 else data[data.length-1].time
     $.getJSON("/boxes/#{boxId}/data_since/#{type}", { since: since }, updateChart)
   else
+    num_updates = 0
     $.getJSON("/boxes/#{boxId}/data/#{type}", { span: span }, drawChart)
 
 initialLoad = () ->
