@@ -107,8 +107,7 @@ loadData = () ->
   span = $("#graph").data("graphSpan")
   type = $("#graph").data("graphType")
   if (data.length > 0)
-    now = new Date
-    since = if num_updates == 0 then Math.floor(now.getTime()/1000)-60 else data[data.length-1].time
+    since = if num_updates == 0 then Math.floor(new Date().getTime()/1000)-60 else data[data.length-1].time
     $.getJSON("/boxes/#{boxId}/data_since/#{type}", { since: since }, updateChart)
   else
     $.getJSON("/boxes/#{boxId}/data/#{type}", { span: span }, drawChart)
