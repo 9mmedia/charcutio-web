@@ -43,16 +43,11 @@ class BoxesController < ApplicationController
   def data
     data = []
     span = params[:span] || :day
-    relay_types = DataPoint::RELAY_TYPES[params[:type].to_sym]
     @box.data_for(params[:type], span.to_sym).map do |datum|
       if data.empty? || data[-1][:time] != datum.created_at.to_i
-        data << {time: datum.created_at.to_i, value: nil, relay0: nil, relay1: nil}
+        data << {time: datum.created_at.to_i, value: nil}
       end
       data[-1][:value] ||= datum.value if datum.data_type == params[:type]
-      if relay_types
-        data[-1][:relay0] ||= datum.value if datum.data_type == relay_types[0]
-        data[-1][:relay1] ||= datum.value if datum.data_type == relay_types[1]
-      end
     end
     render :json => { type: params[:type], data: data }
   end
@@ -61,16 +56,11 @@ class BoxesController < ApplicationController
     data = []
     puts "SINCE: #{params[:since]}"
     since = params[:since] ? Time.at(params[:since].to_i) : 1.hour.ago
-    relay_types = DataPoint::RELAY_TYPES[params[:type].to_sym]
     @box.data_since(params[:type], since).map do |datum|
       if data.empty? || data[-1][:time] != datum.created_at.to_i
-        data << {time: datum.created_at.to_i, value: nil, relay0: nil, relay1: nil}
+        data << {time: datum.created_at.to_i, value: nil}
       end
       data[-1][:value] ||= datum.value if datum.data_type == params[:type]
-      if relay_types
-        data[-1][:relay0] ||= datum.value if datum.data_type == relay_types[0]
-        data[-1][:relay1] ||= datum.value if datum.data_type == relay_types[1]
-      end
     end
     render :json => { type: params[:type], data: data }
   end

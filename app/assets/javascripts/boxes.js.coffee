@@ -72,7 +72,7 @@ drawChart = (json) ->
           lineWidth: 1,
           states: {
               hover: {
-                  lineWidth: 2
+                  lineWidth: 1
               }
           },
           marker: {
