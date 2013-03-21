@@ -30,7 +30,7 @@ createRow = (tuple, column_count) ->
 drawChart = (json) ->
   data = json.data
   chartData = for point in data #[data.length-1..0] by -1
-     createRow(point, 1) if point.value
+     createRow(point, 1)
   chart = new Highcharts.Chart({
       chart: {
           renderTo: 'rendered-graph',
