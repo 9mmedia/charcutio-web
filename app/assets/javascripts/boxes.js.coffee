@@ -4,6 +4,7 @@
 data = []
 chart = {}
 num_updates = 0
+interval = 0
 
 sensor_types =
   temperature: "Temperature (C)"
@@ -12,20 +13,12 @@ sensor_types =
   weight_1: "Weight 2"
   weight_2: "Weight 3"
 
-relay_types =
-  temperature: "Freezer (0: off, 100: on)"
-  humidity: "Humidifier (0: off, 100: on)"
-
-secondary_relay_types =
-  humidity: "Dehumidifier (0: off, 100: on)"
+relays =
+  temperature: ["freezer"]
+  humidity: ["humidifier","dehumidifier"]
 
 createRow = (tuple, column_count) ->
   row = [tuple.time * 1000, tuple.value]
-  if column_count > 2
-    row.push tuple.relay0
-  if column_count > 3
-    row.push tuple.relay1
-  row
 
 drawChart = (json) ->
   data = json.data
@@ -34,7 +27,6 @@ drawChart = (json) ->
   chart = new Highcharts.Chart({
       chart: {
           renderTo: 'rendered-graph',
-          type: 'spline',
           zoomType: 'x',
           spacingRight: 20
       },
@@ -91,9 +83,11 @@ drawChart = (json) ->
 
       series: [{
           name: '',
+          type: "spline"
           data: chartData
       }]
   })
+  interval = setInterval updateData,   5000
 
 updateChart = (json) ->
   if json.data.length > 0
@@ -106,20 +100,20 @@ loadData = () ->
   boxId = $("#graph").data("boxId")
   span = $("#graph").data("graphSpan")
   type = $("#graph").data("graphType")
-  if (data.length > 0)
-    since = if num_updates == 0 then Math.floor(new Date().getTime()/1000)-60 else data[data.length-1].time
-    $.getJSON("/boxes/#{boxId}/data_since/#{type}", { since: since }, updateChart)
-  else
-    num_updates = 0
-    $.getJSON("/boxes/#{boxId}/data/#{type}", { span: span }, drawChart)
+  num_updates = 0
+  clearInterval interval
+  $.getJSON("/boxes/#{boxId}/data/#{type}", { span: span }, drawChart)
+  if type
+
+updateData = () ->
+  boxId = $("#graph").data("boxId")
+  span = $("#graph").data("graphSpan")
+  type = $("#graph").data("graphType")
+  since = if num_updates == 0 then Math.floor(new Date().getTime()/1000)-60 else data[data.length-1].time
+  $.getJSON("/boxes/#{boxId}/data_since/#{type}", { since: since }, updateChart)
 
 initialLoad = () ->
   loadData()
-
-google.load("visualization", "1", {packages:["corechart"]})
-google.setOnLoadCallback(initialLoad)
-
-setInterval loadData,   5000
 
 $(->
   $(".graph-type a").click((e) ->

@@ -49,6 +49,17 @@ class BoxesController < ApplicationController
       end
       data[-1][:value] ||= datum.value if datum.data_type == params[:type]
     end
+
+    if ["freezer","humidifier","dehumidifier"].include? params[:type]
+      prev_val = 0
+      data.each_with_index do |point,index|
+        new_val = point[:value]
+        if prev_val != new_val
+          data.insert(index, {time:data[index][:time], value:prev_val})
+        end
+        prev_val = point[:value]
+      end
+    end
     render :json => { type: params[:type], data: data }
   end
 
