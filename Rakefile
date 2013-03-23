@@ -14,5 +14,7 @@ namespace :test_data do
 		sleep 29
 		data_point = DataPoint.create!(box: @box, data_type: "temperature", value: (10+rand(5)))
 		@box.data_points << data_point
+		data_point = DataPoint.create!(box: @box, data_type: "freezer", value: rand(2)*100)
+		@box.data_points << data_point
 	end
 end
