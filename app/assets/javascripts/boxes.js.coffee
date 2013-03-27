@@ -116,15 +116,17 @@ updateRelaySeries = (json) ->
   if json.data.length>0
     for tuple in json.data
       point = createRow(tuple)
-      seriesForType(json.type).addPoint(point)
+      seriesForType(json.type).addPoint(point,false,true)
       relay_data[json.type].push point
+    chart.redraw()
 
 updateChart = (json) ->
   if json.data.length > 0
     for tuple in json.data
       point = createRow(tuple)
-      seriesForType(type).addPoint(point,true,true)
+      seriesForType(type).addPoint(point,false,true)
       data.push point
+    chart.redraw()
 
 loadData = () ->
   chart = null
