@@ -1,9 +1,0 @@
-<h1><%= @meat.name %></h1>
-
-Recipe: <%= link_to @meat.recipe.name, recipe_url(@meat.recipe) %><br />
-Box: <%= link_to @meat.box.name, box_url(@meat.box) if @meat.box %><br />
-Starting weight (in grams): <%= @meat.initial_weight %><br />
-Started on: <%= @meat.start_date %><br />
-<% if current_user.has_meat_authority?(@meat) %>
-  <%= link_to "Edit or activate meat", edit_meat_url(@meat) %>
-<% end %>

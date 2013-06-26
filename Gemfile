@@ -1,51 +1,34 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+ruby '2.0.0'
 
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
+gem 'rails', '4.0.0'
+gem 'unicorn'
+gem 'pg'
 
-
-#gem 'mongoid', "~> 3.0.0"
-
-
-# Gems used only for assets and not required
-# in production environments by default.
 group :assets do
-  gem 'sass-rails', "~> 3.2.3"
-  gem 'coffee-rails', "~> 3.2.1"
-
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-
-  gem 'uglifier', '>= 1.0.3'
+  gem 'sass-rails', '~> 4.0.0'
+  gem 'uglifier' # compressor for JavaScript assets
+  gem 'coffee-rails', '~> 4.0.0'
 end
 
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# gem 'therubyracer', platforms: :ruby
+
 gem 'jquery-rails'
-gem 'twitter-bootstrap-rails'
-gem 'nested_form'
+gem 'jbuilder'
 
-gem 'devise'
-gem 'twitter'
-gem 'highcharts-rails'
+# Use ActiveModel has_secure_password
+# gem 'bcrypt-ruby'
 
-group :test, :development do
-  gem "rspec-rails", "~> 2.0"
-  gem 'shoulda-matchers', '1.2.0'
-  gem 'mocha', '0.10.5'
-  gem 'sqlite3'
-  gem 'whenever'
+group :development do
+  gem 'rack-mini-profiler'
+end
+
+group :test do
+  gem 'mocha', :require => 'mocha/api'
 end
 
 group :production do
-  gem 'pg'
+  gem 'rails_12factor' # Heroku requirement
 end
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'

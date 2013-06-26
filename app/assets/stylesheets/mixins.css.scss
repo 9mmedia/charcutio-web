@@ -1,0 +1,98 @@
+/* 
+ * Good advice: "If it doesn't need to pass variable, it doesn't need to be a mixin".
+ * https://coderwall.com/p/7p7w2a
+ */
+
+@function compact($var-1, $var-2: false, $var-3: false, $var-4: false,
+                  $var-5: false, $var-6: false, $var-7: false, $var-8: false,
+                  $var-9: false, $var-10: false) {
+  $full: $var-1;
+  $vars: $var-2, $var-3, $var-4, $var-5, $var-6, $var-7, $var-8, $var-9, $var-10;
+
+  @each $var in $vars {
+    @if $var {
+      $full: $full, $var;
+    }
+  }
+
+  @return $full;
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin box-shadow($shadow-1, $shadow-2: false, $shadow-3: false, $shadow-4: false) {
+  $full: compact($shadow-1, $shadow-2, $shadow-3, $shadow-4);
+
+  -webkit-box-shadow: $full;
+     -moz-box-shadow: $full;
+          box-shadow: $full;
+}
+
+@mixin box-sizing($boxmodel) {
+  -webkit-box-sizing: $boxmodel;
+     -moz-box-sizing: $boxmodel;
+          box-sizing: $boxmodel;
+}
+
+@mixin opacity($opacity) {
+  filter: unquote("progid:DXImageTransform.Microsoft.Alpha(Opacity=#{round($opacity * 100)})");
+  opacity: $opacity;
+}
+
+@mixin transform($transform-1, $transform-2: false, $transform-3: false, $transform-4: false) {
+  $full: compact($transform-1, $transform-2, $transform-3, $transform-4);
+
+  -webkit-transform: $full;
+     -moz-transform: $full;
+      -ms-transform: $full;
+       -o-transform: $full;
+          transform: $full;
+}
+
+@mixin transform-origin($value) {
+  -webkit-transform-origin: $value;
+     -moz-transform-origin: $value;
+      -ms-transform-origin: $value;
+       -o-transform-origin: $value;
+          transform-origin: $value;
+}
+
+@mixin transition($transition-1, $transition-2: false, $transition-3: false, $transition-4: false) {
+  $full: compact($transition-1, $transition-2, $transition-3, $transition-4);
+
+  -webkit-transition: $full;
+     -moz-transition: $full;
+       -o-transition: $full;
+          transition: $full;
+}
+
+@mixin horizontal-gradient($startColor, $endColor) {
+  background-color: $endColor;
+  background-image: -moz-linear-gradient(left, $startColor, $endColor); /* FF 3.6+ */
+  background-image: -webkit-gradient(linear, left top, right top, from($startColor), to($endColor)); /* Safari 4+, Chrome 2+ */
+  background-image: -webkit-linear-gradient(left, $startColor, $endColor); /* Safari 5.1+, Chrome 10+ */
+  background-image: -o-linear-gradient(left, $startColor, $endColor); /* Opera 11.10 */
+  background-image: linear-gradient(left, $startColor, $endColor); /* W3C */
+  background-repeat: repeat-y;
+}
+
+@mixin vertical-gradient($startColor, $endColor: false) {
+  @if $startColor == none or $startColor == false {
+    background-color: transparent;
+    background-image: none;
+    -ms-filter: none;
+  } @else {
+    background-color: $endColor;
+    background-image: -moz-linear-gradient(top, $startColor, $endColor); /* FF 3.6+ */
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from($startColor), to($endColor)); /* Safari 4+, Chrome 2+ */
+    background-image: -webkit-linear-gradient(top, $startColor, $endColor); /* Safari 5.1+, Chrome 10+ */
+    background-image: -o-linear-gradient(top, $startColor, $endColor); /* Opera 11.10 */
+    background-image: linear-gradient(top, $startColor, $endColor); /* W3C */
+    background-repeat: repeat-x;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#{$startColor}, endColorstr=#{$endColor}, GradientType=0)"; /* IE6-9 */
+  }
+}

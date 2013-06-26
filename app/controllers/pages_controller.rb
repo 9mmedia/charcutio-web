@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
-  def home
-    @team = Team.new
+
+  def index
   end
+
 end
