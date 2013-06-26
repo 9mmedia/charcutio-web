@@ -21,6 +21,10 @@ gem 'jbuilder'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby'
 
+# gem 'devise'
+# gem 'twitter'
+# gem 'highcharts-rails'
+
 group :development do
   gem 'rack-mini-profiler'
 end
