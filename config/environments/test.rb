@@ -33,4 +33,7 @@ CharcutioWeb::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  # ember-rails states this is optional but if not defined scripts are not found
+  config.ember.variant = :test
 end
