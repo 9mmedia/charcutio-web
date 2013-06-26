@@ -16,6 +16,7 @@ end
 # gem 'therubyracer', platforms: :ruby
 
 gem 'jquery-rails'
+gem 'ember-rails'
 gem 'jbuilder'
 
 # Use ActiveModel has_secure_password

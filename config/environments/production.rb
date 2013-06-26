@@ -78,4 +78,7 @@ CharcutioWeb::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  # ember-rails states this is optional but if not defined scripts are not found
+  config.ember.variant = :production
 end

@@ -32,4 +32,7 @@ CharcutioWeb::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  # ember-rails states this is optional but if not defined scripts are not found
+  config.ember.variant = :development
 end
