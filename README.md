@@ -34,12 +34,16 @@
 
 ## Run Tests
 
-1. Start the server to run tests using `foreman start`
-2. Server side tests use MiniTest (Rails 4 default)
+1. (Optional) Run migrations and prepare test environment database
 
-    bundle exec rake test
+      	bundle exec rake db:migrate && bundle exec rake db:test:prepare
 
-3. Client side tests use QUnit through [qunit-rails gem](https://github.com/frodsan/qunit-rails). Go to [http://localhost:5000/qunit](http://localhost:5000/qunit) to see and run the QUnit Test Runner.
+2. Start the server using `foreman start`
+3. Server side tests use MiniTest (Rails 4 default)
+
+      	bundle exec rake test
+
+4. Client side tests use QUnit through [qunit-rails gem](https://github.com/frodsan/qunit-rails). Go to [http://localhost:5000/qunit](http://localhost:5000/qunit) to see and run the QUnit Test Runner.
 
 ## Data API
 
