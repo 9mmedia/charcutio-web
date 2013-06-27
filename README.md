@@ -12,7 +12,7 @@
 3. Create Heroku account, [install Toolbelt and login using heroku CLI](https://devcenter.heroku.com/articles/quickstart#step-2-install-the-heroku-toolbelt)
 4. Set a Heroku git remote. You can name it something else but examples in other sections will use `heroku` as the remote name.
 
-        git remote add heroku git@heroku.com:myfdb-production.git
+        git remote add heroku git@heroku.com:charcutio-web.git
 
 5. Install [Homebrew](http://brew.sh/)
 6. `brew update`
