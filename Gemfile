@@ -34,6 +34,10 @@ group :test do
   gem 'mocha', :require => 'mocha/api'
 end
 
+group :development, :test do
+  gem 'qunit-rails'
+end
+
 group :production do
   gem 'rails_12factor' # Heroku requirement
 end

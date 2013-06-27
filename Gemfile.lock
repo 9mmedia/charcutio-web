@@ -76,6 +76,8 @@ GEM
     multi_json (1.7.7)
     pg (0.15.1)
     polyglot (0.3.3)
+    qunit-rails (0.0.3)
+      railties (>= 3.2.3)
     rack (1.5.2)
     rack-mini-profiler (0.1.27)
       rack (>= 1.1.3)
@@ -141,6 +143,7 @@ DEPENDENCIES
   jquery-rails
   mocha
   pg
+  qunit-rails
   rack-mini-profiler
   rails (= 4.0.0)
   rails_12factor
