@@ -6,11 +6,9 @@ gem 'rails', '4.0.0'
 gem 'unicorn'
 gem 'pg'
 
-group :assets do
-  gem 'sass-rails', '~> 4.0.0'
-  gem 'uglifier' # compressor for JavaScript assets
-  gem 'coffee-rails', '~> 4.0.0'
-end
+gem 'sass-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.0.0'
+gem 'uglifier' # compressor for JavaScript assets
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
