@@ -3,9 +3,9 @@
 }
 
 body {
-  background-color: #f2f2f2;
 	color: $base-text-color;
 	font: #{$base-font-size}/#{$base-line-height} $brand-font;
+	padding: 30px 50px;
 	position: relative;
 }
 
