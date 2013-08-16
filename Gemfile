@@ -30,6 +30,8 @@ end
 
 group :test do
   gem 'mocha', :require => 'mocha/api'
+  gem 'shoulda-matchers'
+  gem 'factory_girl_rails'
 end
 
 group :development, :test do
