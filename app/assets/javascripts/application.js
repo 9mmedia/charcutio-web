@@ -15,6 +15,14 @@
 //= require handlebars
 //= require ember
 //= require ember-data
+//= require ember-auth
 //= require_self
 //= require charcutio_web
-CharcutioWeb = Ember.Application.create();
+CharcutioWeb = Ember.Application.create({
+  LOG_TRANSITIONS: true,
+  LOG_STACKTRACE_ON_DEPRECATION: true
+});
+CharcutioWeb.Auth = Ember.Auth.create({
+  signInEndPoint: '/sign-in',
+  signOutEndPoint: '/sign-out'
+});

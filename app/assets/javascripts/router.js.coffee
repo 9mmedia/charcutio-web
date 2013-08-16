@@ -1,2 +1,2 @@
 CharcutioWeb.Router.map () ->
-  # routes
+  this.route 'sign_in'
