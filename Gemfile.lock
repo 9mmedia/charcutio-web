@@ -33,6 +33,7 @@ GEM
       ember-source
       execjs
       handlebars-source
+    bcrypt-ruby (3.1.1)
     builder (3.1.4)
     coffee-rails (4.0.0)
       coffee-script (>= 2.2.0)
@@ -41,6 +42,11 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    ember-auth-rails (4.0.3)
+      ember-auth-source
+      rails
+    ember-auth-source (7.1.1)
+      ember-source (>= 1.0.0.rc6.2)
     ember-data-source (0.13)
       ember-source
     ember-rails (0.12.0)
@@ -144,7 +150,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers
+  bcrypt-ruby
   coffee-rails (~> 4.0.0)
+  ember-auth-rails
   ember-rails
   factory_girl_rails
   jbuilder

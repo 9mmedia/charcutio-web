@@ -15,10 +15,12 @@ gem 'uglifier' # compressor for JavaScript assets
 
 gem 'jquery-rails'
 gem 'ember-rails'
+gem 'ember-auth-rails'
 gem 'jbuilder'
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby'
+gem 'bcrypt-ruby'
+gem 'active_model_serializers'
 
 # gem 'devise'
 # gem 'twitter'
