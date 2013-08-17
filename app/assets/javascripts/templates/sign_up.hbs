@@ -1,0 +1,17 @@
+<form id="registration-form" {{action 'submitRegistration' model on="submit"}}>
+  <div>
+    <label>Name</label>
+    {{view Ember.TextField valueBinding="name"}}
+  </div>
+  <div>
+    <label>Email</label>
+    {{view Ember.TextField valueBinding="email"}}
+  </div>
+  <div>
+    <label>Password</label>
+    {{view Ember.TextField type="password" valueBinding="password"}}
+  </div>
+  <div>
+    <input type="submit" value="Register">
+  </div>
+</form>

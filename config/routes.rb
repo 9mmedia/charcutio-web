@@ -1,7 +1,9 @@
 CharcutioWeb::Application.routes.draw do
 
   root to: "pages#index"
-  
+
+  resources :users
+
 #   # cannot use match without specifying get/post,etc.
 #   devise_for :users
 #   resources :boxes do
