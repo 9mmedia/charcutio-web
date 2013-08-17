@@ -19,7 +19,7 @@ gem 'ember-auth-rails'
 gem 'jbuilder'
 
 # Use ActiveModel has_secure_password
-gem 'bcrypt-ruby'
+gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'active_model_serializers'
 
 # gem 'devise'
@@ -30,13 +30,12 @@ group :development do
   gem 'rack-mini-profiler'
 end
 
-group :test do
-  gem 'mocha', :require => 'mocha/api'
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'mocha', require: 'mocha/api'
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
-end
-
-group :development, :test do
+  gem 'json_spec'
   gem 'qunit-rails'
 end
 
