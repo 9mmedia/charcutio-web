@@ -89,6 +89,7 @@ GEM
     mocha (0.14.0)
       metaclass (~> 0.0.1)
     multi_json (1.7.9)
+    newrelic_rpm (3.6.8.164)
     pg (0.16.0)
     polyglot (0.3.3)
     qunit-rails (0.0.3)
@@ -179,6 +180,7 @@ DEPENDENCIES
   jquery-rails
   json_spec
   mocha
+  newrelic_rpm
   pg
   qunit-rails
   rack-mini-profiler
