@@ -22,7 +22,7 @@ CharcutioWeb = Ember.Application.create({
   LOG_TRANSITIONS: true,
   LOG_STACKTRACE_ON_DEPRECATION: true
 });
-CharcutioWeb.Auth = Ember.Auth.create({
+CharcutioWeb.Auth = Ember.Auth.extend({
   signInEndPoint: '/sign-in',
   signOutEndPoint: '/sign-out'
 });
