@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.2'
 gem 'unicorn'
 gem 'pg'
 
@@ -19,7 +19,7 @@ gem 'ember-auth-rails'
 gem 'jbuilder'
 
 # Use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'active_model_serializers'
 
 # gem 'devise'
