@@ -1,5 +1,5 @@
 CharcutioWeb.SignInRoute = Ember.Route.extend
-  events: 
+  actions: 
     submitLogin: (event) ->
       form = $('#login-form')
       email = form.find('input[name="email"]').val()

@@ -1,7 +1,7 @@
 CharcutioWeb.SignUpRoute = Ember.Route.extend
   model: ->
     CharcutioWeb.User.createRecord()
-  events:
+  actions:
     submitRegistration: (record) ->
       console.log('registration')
       console.log(record.toJSON())
