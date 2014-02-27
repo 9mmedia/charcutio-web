@@ -2,8 +2,8 @@
 
 ## Installation
 
-1. `git clone git://github.com:9mmedia/charcutio-web.git` to desired project directory
-2. Use latest patched Ruby 2.0.0 using [ruby-build](https://github.com/sstephenson/ruby-build) and [rbenv](https://github.com/sstephenson/rbenv). If you just did a fresh Ruby install run the following commands:
+1. `git clone https://github.com/9mmedia/charcutio-web.git`
+2. Use latest Ruby using [ruby-build](https://github.com/sstephenson/ruby-build) and [rbenv](https://github.com/sstephenson/rbenv). If you just did a fresh Ruby install run the following commands:
 
         gem update --system
         gem update
@@ -39,10 +39,7 @@
       	bundle exec rake db:migrate && bundle exec rake db:test:prepare
 
 2. Start the server using `foreman start`
-3. Server side tests use MiniTest (Rails 4 default)
-
-      	bundle exec rake test
-
+3. `bundle exec rspec`
 4. Client side tests use QUnit through [qunit-rails gem](https://github.com/frodsan/qunit-rails). Go to [http://localhost:5000/qunit](http://localhost:5000/qunit) to see and run the QUnit Test Runner.
 
 ## Data API
